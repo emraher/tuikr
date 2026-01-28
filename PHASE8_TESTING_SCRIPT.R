@@ -1,8 +1,8 @@
 # Phase 8: Testing & Validation Script
-# Run this script to validate the tuikR package before final deployment
+# Run this script to validate the tuikr package before final deployment
 
 cat("========================================\n")
-cat("tuikR Package Validation - Phase 8\n")
+cat("tuikr Package Validation - Phase 8\n")
 cat("========================================\n\n")
 
 # ------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ cat("5. Testing statistical data functions...\n")
 # Test statistical_themes
 cat("  - Testing statistical_themes()...\n")
 themes <- tryCatch({
-  tuikR::statistical_themes()
+  tuikr::statistical_themes()
 }, error = function(e) {
   cat("    ✗ ERROR:", e$message, "\n")
   NULL
@@ -52,7 +52,7 @@ if (!is.null(themes)) {
 # Test statistical_tables
 cat("  - Testing statistical_tables()...\n")
 tables <- tryCatch({
-  tuikR::statistical_tables("110")
+  tuikr::statistical_tables("110")
 }, error = function(e) {
   cat("    ✗ ERROR:", e$message, "\n")
   NULL
@@ -66,7 +66,7 @@ if (!is.null(tables)) {
 # Test statistical_databases
 cat("  - Testing statistical_databases()...\n")
 databases <- tryCatch({
-  tuikR::statistical_databases("110")
+  tuikr::statistical_databases("110")
 }, error = function(e) {
   cat("    ✗ ERROR:", e$message, "\n")
   NULL
@@ -88,7 +88,7 @@ cat("6. Testing geographic data functions...\n")
 # Test geo_data (metadata mode)
 cat("  - Testing geo_data() [metadata mode]...\n")
 vars <- tryCatch({
-  tuikR::geo_data()
+  tuikr::geo_data()
 }, error = function(e) {
   cat("    ✗ ERROR:", e$message, "\n")
   NULL
@@ -102,7 +102,7 @@ if (!is.null(vars)) {
 # Test geo_data (data download mode)
 cat("  - Testing geo_data() [data download mode]...\n")
 cinema_data <- tryCatch({
-  tuikR::geo_data(
+  tuikr::geo_data(
     variable_level = 3,
     variable_no = "SNM-GK160951-O33303",
     variable_source = "medas",
@@ -124,7 +124,7 @@ cat("  - Testing geo_map()...\n")
 
 for (level in c(2, 3, 4, 9)) {
   map <- tryCatch({
-    tuikR::geo_map(level)
+    tuikr::geo_map(level)
   }, error = function(e) {
     cat("    ✗ ERROR at level", level, ":", e$message, "\n")
     NULL
@@ -209,7 +209,7 @@ cat("10. Checking NEWS.md...\n")
 
 if (file.exists("NEWS.md")) {
   news <- readLines("NEWS.md")
-  if (any(grepl("# tuikR 0.1.0", news))) {
+  if (any(grepl("# tuikr 0.1.0", news))) {
     cat("    ✓ NEWS.md contains 0.1.0 entry\n")
   } else {
     cat("    ✗ NEWS.md missing 0.1.0 entry\n")

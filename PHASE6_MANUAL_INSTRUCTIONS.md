@@ -11,13 +11,13 @@ Before starting, ensure:
 
 ## Step 1: GitHub Repository Rename
 
-**CRITICAL:** This step will rename your repository from `emraher/tuik` to `emraher/tuikR`.
+**CRITICAL:** This step will rename your repository from `emraher/tuik` to `emraher/tuikr`.
 
 ### 1.1 Rename on GitHub
 
 1. Go to: https://github.com/emraher/tuik/settings
 2. Scroll down to "Repository name"
-3. Change `tuik` to `tuikR`
+3. Change `tuik` to `tuikr`
 4. Click "Rename"
 
 **Important:** GitHub will automatically:
@@ -33,13 +33,13 @@ After renaming on GitHub, update your local repository:
 cd /Users/emraher/Workspace/tuik
 
 # Update the remote URL
-git remote set-url origin git@github.com:emraher/tuikR.git
+git remote set-url origin git@github.com:emraher/tuikr.git
 
 # Verify the change
 git remote -v
 # Should show:
-# origin  git@github.com:emraher/tuikR.git (fetch)
-# origin  git@github.com:emraher/tuikR.git (push)
+# origin  git@github.com:emraher/tuikr.git (fetch)
+# origin  git@github.com:emraher/tuikr.git (push)
 
 # Push all commits and verify connection
 git push origin master
@@ -51,8 +51,8 @@ For consistency, you may want to rename the local directory:
 
 ```bash
 cd /Users/emraher/Workspace
-mv tuik tuikR
-cd tuikR
+mv tuik tuikr
+cd tuikr
 ```
 
 If you do this, remember to update any IDE/editor project settings.
@@ -65,7 +65,7 @@ If you do this, remember to update any IDE/editor project settings.
 
 1. Go to: https://zenodo.org/account/settings/github/
 2. Log in with your GitHub account if needed
-3. Find `emraher/tuikR` in the repository list
+3. Find `emraher/tuikr` in the repository list
 4. Click the toggle to enable Zenodo archiving
 
 **Note:** If the repository was previously linked as `emraher/tuik`, the rename should preserve the connection. Verify the existing DOI badge still works.
@@ -90,12 +90,12 @@ If not already enabled:
 
 ## Step 3: Verify Package References
 
-All package files should already reference `tuikR` (this was done in Phase 1). Verify:
+All package files should already reference `tuikr` (this was done in Phase 1). Verify:
 
-- [x] README.md: Installation instructions use `emraher/tuikR`
-- [x] DESCRIPTION: URLs point to `emraher/tuikR`
-- [x] CITATION.cff: Repository URL is `emraher/tuikR`
-- [x] _pkgdown.yml: URL is `https://eremrah.com/tuikR`
+- [x] README.md: Installation instructions use `emraher/tuikr`
+- [x] DESCRIPTION: URLs point to `emraher/tuikr`
+- [x] CITATION.cff: Repository URL is `emraher/tuikr`
+- [x] _pkgdown.yml: URL is `https://eremrah.com/tuikr`
 - [x] GitHub Actions workflows: Should auto-update after rename
 
 ---
@@ -121,7 +121,7 @@ git push origin --tags
 
 After pushing:
 
-1. Go to: https://github.com/emraher/tuikR/actions
+1. Go to: https://github.com/emraher/tuikr/actions
 2. Verify that workflows trigger correctly:
    - R-CMD-check should run
    - test-coverage should run
@@ -134,11 +134,11 @@ After pushing:
 
 After GitHub Actions complete:
 
-1. Go to: https://github.com/emraher/tuikR/settings/pages
+1. Go to: https://github.com/emraher/tuikr/settings/pages
 2. Verify that GitHub Pages is enabled
 3. Source should be: "Deploy from a branch"
 4. Branch should be: `gh-pages` / `/ (root)`
-5. Visit: https://eremrah.com/tuikR/
+5. Visit: https://eremrah.com/tuikr/
 6. Verify the website loads correctly with:
    - All three vignettes in Articles menu
    - Correct version number (0.1.0)
@@ -163,11 +163,11 @@ If the Zenodo badge in README.md breaks after renaming:
 
 ## Completion Checklist
 
-- [ ] Repository renamed to `emraher/tuikR` on GitHub
+- [ ] Repository renamed to `emraher/tuikr` on GitHub
 - [ ] Local git remote updated to new URL
 - [ ] All commits pushed successfully to renamed repository
 - [ ] GitHub Actions workflows pass
-- [ ] pkgdown website deployed to https://eremrah.com/tuikR/
+- [ ] pkgdown website deployed to https://eremrah.com/tuikr/
 - [ ] Zenodo integration verified
 - [ ] Zenodo badge works in README
 - [ ] All links in package documentation work

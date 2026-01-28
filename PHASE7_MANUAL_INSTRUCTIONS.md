@@ -4,7 +4,7 @@ This phase configures your GitHub repository settings and creates the v0.1.0 rel
 
 ## Prerequisites
 
-- [x] Phase 6 complete (repository renamed to `emraher/tuikR`)
+- [x] Phase 6 complete (repository renamed to `emraher/tuikr`)
 - [x] All commits pushed to GitHub
 - [x] GitHub Actions passing
 
@@ -12,7 +12,7 @@ This phase configures your GitHub repository settings and creates the v0.1.0 rel
 
 ### 1.1 Repository Description
 
-1. Go to: https://github.com/emraher/tuikR
+1. Go to: https://github.com/emraher/tuikr
 2. Click the gear icon (⚙️) next to "About"
 3. Set **Description:**
    ```
@@ -20,7 +20,7 @@ This phase configures your GitHub repository settings and creates the v0.1.0 rel
    ```
 4. Set **Website:**
    ```
-   https://eremrah.com/tuikR
+   https://eremrah.com/tuikr
    ```
 5. Click "Save changes"
 
@@ -45,13 +45,13 @@ Click "Save changes"
 
 ### 1.3 Enable GitHub Pages
 
-1. Go to: https://github.com/emraher/tuikR/settings/pages
+1. Go to: https://github.com/emraher/tuikr/settings/pages
 2. Under "Source", select:
    - **Branch:** `gh-pages`
    - **Folder:** `/ (root)`
 3. Click "Save"
 4. Wait 1-2 minutes for deployment
-5. Verify site is accessible at: https://eremrah.com/tuikR/
+5. Verify site is accessible at: https://eremrah.com/tuikr/
 
 **Note:** If you have a custom domain configured (eremrah.com), ensure DNS settings are correct.
 
@@ -61,7 +61,7 @@ Click "Save changes"
 
 ### 2.1 Prepare Release
 
-1. Go to: https://github.com/emraher/tuikR/releases
+1. Go to: https://github.com/emraher/tuikr/releases
 2. Click "Create a new release"
 3. Click "Choose a tag"
 4. Type: `v0.1.0`
@@ -71,7 +71,7 @@ Click "Save changes"
 
 **Release title:**
 ```
-tuikR 0.1.0
+tuikr 0.1.0
 ```
 
 **Description:**
@@ -81,7 +81,7 @@ Copy the entire contents of `RELEASE_v0.1.0.md` file into the description box.
 Alternatively, you can write a shorter version:
 
 ```markdown
-# tuikR 0.1.0
+# tuikr 0.1.0
 
 Major improvements with comprehensive documentation, vignettes, and enhanced pkgdown website.
 
@@ -92,14 +92,14 @@ Major improvements with comprehensive documentation, vignettes, and enhanced pkg
 - 🌐 Improved pkgdown website with articles menu
 - 🐛 Bug fixes for installation and examples
 
-[View full changelog](https://github.com/emraher/tuikR/blob/master/NEWS.md)
+[View full changelog](https://github.com/emraher/tuikr/blob/master/NEWS.md)
 
 **Installation:**
 ```r
-devtools::install_github("emraher/tuikR")
+devtools::install_github("emraher/tuikr")
 ```
 
-**Website:** https://eremrah.com/tuikR/
+**Website:** https://eremrah.com/tuikr/
 ```
 
 ### 2.3 Publish Release
@@ -120,7 +120,7 @@ devtools::install_github("emraher/tuikR")
 
 ### 3.1 Check Release Page
 
-1. Go to: https://github.com/emraher/tuikR/releases/tag/v0.1.0
+1. Go to: https://github.com/emraher/tuikr/releases/tag/v0.1.0
 2. Verify release notes display correctly
 3. Check that source code archives are available
 
@@ -133,13 +133,13 @@ devtools::install_github("emraher/tuikR")
 
 ### 3.3 Check GitHub Actions
 
-1. Go to: https://github.com/emraher/tuikR/actions
+1. Go to: https://github.com/emraher/tuikr/actions
 2. Verify workflows triggered by the tag
 3. All should pass (green checkmarks)
 
 ### 3.4 Verify Badges in README
 
-Visit: https://github.com/emraher/tuikR
+Visit: https://github.com/emraher/tuikr
 
 Check that all badges work:
 - Lifecycle badge (experimental)
@@ -158,18 +158,18 @@ In a fresh R session:
 
 ```r
 # Remove existing version if installed
-remove.packages("tuikR")
+remove.packages("tuikr")
 
 # Install from GitHub
-devtools::install_github("emraher/tuikR")
+devtools::install_github("emraher/tuikr")
 
 # Load and check version
-library(tuikR)
-packageVersion("tuikR")
+library(tuikr)
+packageVersion("tuikr")
 # Should show: '0.1.0'
 
 # Check vignettes are available
-browseVignettes("tuikR")
+browseVignettes("tuikr")
 # Should show 3 vignettes
 ```
 
@@ -177,13 +177,13 @@ browseVignettes("tuikR")
 
 ```r
 # Install from release tag
-devtools::install_github("emraher/tuikR@v0.1.0")
+devtools::install_github("emraher/tuikr@v0.1.0")
 ```
 
 ### 4.3 Test Basic Functionality
 
 ```r
-library(tuikR)
+library(tuikr)
 
 # Test statistical functions
 themes <- statistical_themes()
@@ -206,9 +206,9 @@ All should work without errors.
 Verify all settings:
 
 ### Settings > General
-- [x] Repository name: `tuikR`
+- [x] Repository name: `tuikr`
 - [x] Description: Set correctly
-- [x] Website: https://eremrah.com/tuikR
+- [x] Website: https://eremrah.com/tuikr
 - [x] Topics: Added correctly
 
 ### Settings > Pages

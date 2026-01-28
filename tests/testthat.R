@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(tuikR)
+library(tuikr)
 
-test_check("tuikR")
+test_check("tuikr")

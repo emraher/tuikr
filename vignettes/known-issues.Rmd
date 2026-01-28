@@ -17,13 +17,13 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-This vignette documents known issues, limitations, and workarounds when using `tuikR`. Understanding these challenges will help you work more effectively with TUIK data.
+This vignette documents known issues, limitations, and workarounds when using `tuikr`. Understanding these challenges will help you work more effectively with TUIK data.
 
 ## TUIK Website Structure Changes
 
 ### The Challenge
 
-`tuikR` relies on web scraping to extract data from TUIK's portals. When TUIK updates their website structure, scraping functions can break. This is an inherent limitation of any web scraping approach.
+`tuikr` relies on web scraping to extract data from TUIK's portals. When TUIK updates their website structure, scraping functions can break. This is an inherent limitation of any web scraping approach.
 
 **Symptoms:**
 - Functions that previously worked now return errors
@@ -42,14 +42,14 @@ databases <- statistical_databases("110")
 1. **Check for package updates:**
 ```{r check_update}
 # Check your current version
-packageVersion("tuikR")
+packageVersion("tuikr")
 
 # Install the latest development version
-devtools::install_github("emraher/tuikR")
+devtools::install_github("emraher/tuikr")
 ```
 
 2. **Report the issue:**
-   - Visit [GitHub Issues](https://github.com/emraher/tuikR/issues)
+   - Visit [GitHub Issues](https://github.com/emraher/tuikr/issues)
    - Provide details: which function, error message, date discovered
    - Include `sessionInfo()` output
 
@@ -80,7 +80,7 @@ TUIK Excel files have inconsistent formatting that makes them challenging to par
 
 ```{r messy_example}
 library(readxl)
-library(tuikR)
+library(tuikr)
 
 # Download a file
 tables <- statistical_tables("110")
@@ -179,14 +179,14 @@ read_xls("/tmp/data.xls") %>% slice((n()-5):n())
 
 ### Online-Only Functions
 
-All `tuikR` functions require internet connectivity:
+All `tuikr` functions require internet connectivity:
 - `statistical_themes()`, `statistical_tables()`, `statistical_databases()`: Scrape TUIK web pages
 - `geo_data()`, `geo_map()`: Query TUIK's geographic API
 
 ### Handling Connection Failures
 
 ```{r connection_handling}
-library(tuikR)
+library(tuikr)
 
 # Use tryCatch for robust code
 safely_get_themes <- function() {
@@ -338,7 +338,7 @@ data <- geo_data(3, "SNM-GK160951-O33303", "medas", "yillik", 5) %>%
 
 ## GitHub Issue #2: Connection Problems
 
-[Issue #2](https://github.com/emraher/tuikR/issues/2) on the GitHub repository tracks common connection-related problems. If you encounter:
+[Issue #2](https://github.com/emraher/tuikr/issues/2) on the GitHub repository tracks common connection-related problems. If you encounter:
 
 - Timeouts
 - SSL certificate errors
@@ -354,7 +354,7 @@ Check this issue for:
 
 ### Background
 
-Earlier versions of `tuikR` used the V8 JavaScript engine to execute TUIK's JavaScript code for retrieving map data. This created installation challenges:
+Earlier versions of `tuikr` used the V8 JavaScript engine to execute TUIK's JavaScript code for retrieving map data. This created installation challenges:
 
 - V8 requires system libraries (libv8-dev)
 - Installation fails on some systems
@@ -378,7 +378,7 @@ If you have old code that requires V8:
 # Install V8 (optional)
 install.packages("V8")
 
-# Or skip it - modern tuikR doesn't need it
+# Or skip it - modern tuikr doesn't need it
 ```
 
 ## Character Encoding
@@ -445,7 +445,7 @@ object.size(lau1_simple) %>% format(units = "MB")
 
 If you discover a new issue:
 
-1. **Check existing issues:** [github.com/emraher/tuikR/issues](https://github.com/emraher/tuikR/issues)
+1. **Check existing issues:** [github.com/emraher/tuikr/issues](https://github.com/emraher/tuikr/issues)
 
 2. **Provide details:**
    - Function call that failed
@@ -455,7 +455,7 @@ If you discover a new issue:
 
 3. **Create a minimal reproducible example:**
 ```{r reprex, eval=FALSE}
-library(tuikR)
+library(tuikr)
 
 # Minimal code that reproduces the problem
 result <- statistical_tables("110")
@@ -477,11 +477,11 @@ Subscribe to the GitHub repository to receive notifications:
 
 ```bash
 # Watch the repository on GitHub
-# Visit: https://github.com/emraher/tuikR
+# Visit: https://github.com/emraher/tuikr
 # Click "Watch" → "All Activity"
 ```
 
-Check the [NEWS.md](https://github.com/emraher/tuikR/blob/master/NEWS.md) file for version-specific changes.
+Check the [NEWS.md](https://github.com/emraher/tuikr/blob/master/NEWS.md) file for version-specific changes.
 
 ## Summary
 
@@ -495,4 +495,4 @@ Check the [NEWS.md](https://github.com/emraher/tuikR/blob/master/NEWS.md) file f
 | Turkish locales | Low | Set system locale |
 | V8 dependency | Low (historical) | Now optional, not needed |
 
-Despite these limitations, `tuikR` provides valuable access to TUIK data that would otherwise require extensive manual work. Understanding these challenges helps you build robust data pipelines.
+Despite these limitations, `tuikr` provides valuable access to TUIK data that would otherwise require extensive manual work. Understanding these challenges helps you build robust data pipelines.

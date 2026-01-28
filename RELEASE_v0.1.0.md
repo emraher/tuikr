@@ -1,6 +1,6 @@
-# tuikR 0.1.0
+# tuikr 0.1.0
 
-This release represents a major improvement to the tuikR package with comprehensive documentation, new vignettes, and an enhanced pkgdown website.
+This release represents a major improvement to the tuikr package with comprehensive documentation, new vignettes, and an enhanced pkgdown website.
 
 ## 🎉 Major Improvements
 
@@ -29,11 +29,11 @@ Three comprehensive vignettes to guide users:
 - Custom footer with attribution
 - Improved site navigation and user experience
 
-**Visit the website:** https://eremrah.com/tuikR/
+**Visit the website:** https://eremrah.com/tuikr/
 
 ## 🐛 Bug Fixes
 
-- Fixed README installation commands (corrected repository name from `emraher/tuik` to `emraher/tuikR`)
+- Fixed README installation commands (corrected repository name from `emraher/tuik` to `emraher/tuikr`)
 - Fixed `geo_data()` example parameter name (`level` → `variable_level`)
 - Removed deprecated V8 import from `geo_map()` documentation
 - Added comprehensive examples for `geo_data()` showing both metadata and data retrieval modes
@@ -48,19 +48,19 @@ Three comprehensive vignettes to guide users:
 
 ```r
 # Install from GitHub
-devtools::install_github("emraher/tuikR")
+devtools::install_github("emraher/tuikr")
 
 # Load the package
-library(tuikR)
+library(tuikr)
 
 # Get started
-vignette("getting-started", package = "tuikR")
+vignette("getting-started", package = "tuikr")
 ```
 
 ## 📊 Quick Example
 
 ```r
-library(tuikR)
+library(tuikr)
 library(tidyverse)
 library(sf)
 
@@ -91,11 +91,11 @@ This package provides access to data from the Turkish Statistical Institute (TUI
 If you use this package in your research, please cite:
 
 ```
-Er, E. (2026). tuikR: Download Data File And Database Urls from TUIK.
-R package version 0.1.0. https://github.com/emraher/tuikR
+Er, E. (2026). tuikr: Download Data File And Database Urls from TUIK.
+R package version 0.1.0. https://github.com/emraher/tuikr
 DOI: 10.5281/zenodo.313863336
 ```
 
 ---
 
-**Full Changelog**: https://github.com/emraher/tuikR/compare/v0.0.2...v0.1.0
+**Full Changelog**: https://github.com/emraher/tuikr/compare/v0.0.2...v0.1.0

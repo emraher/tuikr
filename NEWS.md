@@ -1,4 +1,4 @@
-# tuikR 0.1.0
+# tuikr 0.1.0
 
 ## Major Improvements
 
@@ -29,7 +29,7 @@ Added three comprehensive vignettes to guide users:
 
 ## Bug Fixes
 
-* Fixed README installation commands (corrected repository name from `emraher/tuik` to `emraher/tuikR`)
+* Fixed README installation commands (corrected repository name from `emraher/tuik` to `emraher/tuikr`)
 * Fixed `geo_data()` example parameter name (`level` → `variable_level`)
 * Removed deprecated V8 import from `geo_map()` documentation
 * Added comprehensive examples for `geo_data()` showing both metadata and data retrieval modes
@@ -42,9 +42,9 @@ Added three comprehensive vignettes to guide users:
 
 ---
 
-# tuikR 0.0.2
+# tuikr 0.0.2
 
-* Renamed package from tuik to tuikR
+* Renamed package from tuik to tuikr
 * Updated package infrastructure with modern R package development tools
 * Added GitHub Actions workflows for CI/CD
 * Added testthat edition 3 testing infrastructure
@@ -52,7 +52,7 @@ Added three comprehensive vignettes to guide users:
 * Moved V8 from Depends to Suggests (optional dependency)
 * Improved package documentation
 
-# tuikR 0.0.1
+# tuikr 0.0.1
 
 * Initial release
 * Functions for accessing TUIK statistical data portal

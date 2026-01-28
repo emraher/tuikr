@@ -1,8 +1,8 @@
 ---
-title: "Geographic Mapping with tuikR"
+title: "Geographic Mapping with tuikr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Geographic Mapping with tuikR}
+  %\VignetteIndexEntry{Geographic Mapping with tuikr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The `tuikR` package provides access to geographic statistical data from TUIK's Geographic Statistics Portal. This vignette demonstrates how to:
+The `tuikr` package provides access to geographic statistical data from TUIK's Geographic Statistics Portal. This vignette demonstrates how to:
 
 1. Discover available geographic variables
 2. Download data at different NUTS levels
@@ -45,7 +45,7 @@ Turkey's administrative divisions follow the NUTS (Nomenclature of Territorial U
 ## Setup
 
 ```{r setup}
-library(tuikR)
+library(tuikr)
 library(tidyverse)
 library(sf)
 ```
@@ -472,7 +472,7 @@ map_projected <- st_transform(map_data, crs = 3395)
 - Explore all available variables: `geo_data()`
 - Check the package documentation: `?geo_data`, `?geo_map`
 - For known issues and limitations, see `vignette("known-issues")`
-- Share your maps on social media with #tuikR!
+- Share your maps on social media with #tuikr!
 
 ## Further Reading
 

@@ -2,13 +2,13 @@ template:
   package: eerdown
   bootstrap: 5
 
-url: https://eremrah.com/tuikR
+url: https://eremrah.com/tuikr
 
 development:
   mode: auto
 
 home:
-  title: tuikR - Access Turkish Statistical Institute Data
+  title: tuikr - Access Turkish Statistical Institute Data
   description: >
     R package for downloading statistical tables, databases, and geographic data
     from the Turkish Statistical Institute (TUIK/TÜİK).
@@ -18,7 +18,7 @@ home:
   - text: TUIK Geographic Portal
     href: https://cip.tuik.gov.tr/
   - text: Report an Issue
-    href: https://github.com/emraher/tuikR/issues
+    href: https://github.com/emraher/tuikr/issues
 
 authors:
   Emrah Er:

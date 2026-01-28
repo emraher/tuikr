@@ -1,35 +1,35 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tuikR
+# tuikr
 
 <!-- badges: start -->
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![DOI](https://zenodo.org/badge/313863336.svg)](https://zenodo.org/badge/latestdoi/313863336)
-[![R-CMD-check](https://github.com/emraher/tuikR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/emraher/tuikR/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/emraher/tuikr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/emraher/tuikr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of `tuikR` is to extract data file and database URLs from
+The goal of `tuikr` is to extract data file and database URLs from
 [TUIK](https://data.tuik.gov.tr/) webpage. Package can also download
 data from [Geographical Statistics Portal](https://cip.tuik.gov.tr/).
 
 ## Installation
 
 You can install the development version from
-[GitHub](https://github.com/emraher/tuikR) with:
+[GitHub](https://github.com/emraher/tuikr) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("emraher/tuikR")
+devtools::install_github("emraher/tuikr")
 ```
 
 ## Example
 
 ``` r
 library(tidyverse)
-library(tuikR)
+library(tuikr)
 
 (st <- statistical_themes())
 #> # A tibble: 17 × 2
@@ -96,7 +96,7 @@ library(tuikR)
 ```
 
 **If you are having problems at this stage, please see this issue on
-[GitHub](https://github.com/emraher/tuikR/issues/2).**
+[GitHub](https://github.com/emraher/tuikr/issues/2).**
 
 ``` r
 # -------------------------------------------------------------------------- ###
@@ -407,7 +407,7 @@ library(tidyverse)
 library(sf)
 library(cartogram)
 library(geogrid)
-library(tuikR)
+library(tuikr)
 
 # -------------------------------------------------------------------------- ###
 # Hex----

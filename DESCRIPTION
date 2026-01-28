@@ -1,4 +1,4 @@
-Package: tuikR
+Package: tuikr
 Title: Download Data File And Database Urls from TUIK
 Version: 0.1.0
 Authors@R:
@@ -7,8 +7,8 @@ Description: Download Data File And Database Urls from TUIK (Turkish Statistical
     Provides functions to extract statistical tables, databases, and geographic data
     from the TUIK web portal and geographic statistics portal.
 License: MIT + file LICENSE
-URL: https://github.com/emraher/tuikR, https://eremrah.com/tuikR/
-BugReports: https://github.com/emraher/tuikR/issues
+URL: https://github.com/emraher/tuikr, https://eremrah.com/tuikr/
+BugReports: https://github.com/emraher/tuikr/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

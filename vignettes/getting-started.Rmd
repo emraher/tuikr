@@ -1,8 +1,8 @@
 ---
-title: "Getting Started with tuikR"
+title: "Getting Started with tuikr"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started with tuikR}
+  %\VignetteIndexEntry{Getting Started with tuikr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-`tuikR` provides access to data from the Turkish Statistical Institute (TUIK/TÜİK). The package connects to two different TUIK portals:
+`tuikr` provides access to data from the Turkish Statistical Institute (TUIK/TÜİK). The package connects to two different TUIK portals:
 
 1. **Main TUIK Data Portal** ([data.tuik.gov.tr](https://data.tuik.gov.tr/)): Statistical themes, tables, and databases
 2. **Geographic Statistics Portal** ([cip.tuik.gov.tr](https://cip.tuik.gov.tr/)): Spatial data and maps
@@ -30,13 +30,13 @@ Install the development version from GitHub:
 
 ```{r install}
 # install.packages("devtools")
-devtools::install_github("emraher/tuikR")
+devtools::install_github("emraher/tuikr")
 ```
 
 Load the package:
 
 ```{r setup}
-library(tuikR)
+library(tuikr)
 library(tidyverse)
 ```
 
@@ -157,14 +157,14 @@ If you're having trouble connecting to TUIK servers:
 2. Verify that TUIK portals are accessible:
    - [https://data.tuik.gov.tr/](https://data.tuik.gov.tr/)
    - [https://cip.tuik.gov.tr/](https://cip.tuik.gov.tr/)
-3. See [Issue #2](https://github.com/emraher/tuikR/issues/2) on GitHub for known connection problems
+3. See [Issue #2](https://github.com/emraher/tuikr/issues/2) on GitHub for known connection problems
 
 ### Website Structure Changes
 
 TUIK occasionally updates their website structure, which can break web scraping functions. If you encounter unexpected errors:
 
-1. Check if there's a newer version of `tuikR`
-2. Report the issue on [GitHub](https://github.com/emraher/tuikR/issues)
+1. Check if there's a newer version of `tuikr`
+2. Report the issue on [GitHub](https://github.com/emraher/tuikr/issues)
 
 ### Excel File Problems
 
@@ -186,7 +186,7 @@ If `readxl::read_xls()` fails:
 Here's a complete example that combines all the steps:
 
 ```{r complete}
-library(tuikR)
+library(tuikr)
 library(tidyverse)
 library(readxl)
 

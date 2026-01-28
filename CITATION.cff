@@ -4,10 +4,10 @@ authors:
   - family-names: "Er"
     given-names: "Emrah"
     email: "eer@eremrah.com"
-title: "tuikR: Download Data File And Database Urls from TUIK"
+title: "tuikr: Download Data File And Database Urls from TUIK"
 version: 0.1.0
 date-released: 2026-01-28
-url: "https://github.com/emraher/tuikR"
-repository-code: "https://github.com/emraher/tuikR"
+url: "https://github.com/emraher/tuikr"
+repository-code: "https://github.com/emraher/tuikr"
 license: MIT
 abstract: "An R package for accessing Turkish Statistical Institute (TUIK) data. Provides functions to extract statistical tables, databases, and geographic data from the TUIK web portal and geographic statistics portal."

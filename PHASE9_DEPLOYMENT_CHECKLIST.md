@@ -23,7 +23,7 @@ Final verification before announcing the v0.1.0 release.
 
 ### GitHub Repository
 
-- [ ] Repository renamed to `emraher/tuikR`
+- [ ] Repository renamed to `emraher/tuikr`
 - [ ] All commits pushed to master
 - [ ] GitHub Actions workflows passing:
   - [ ] R-CMD-check
@@ -35,7 +35,7 @@ Final verification before announcing the v0.1.0 release.
 
 ### Website
 
-- [ ] pkgdown site deployed at https://eremrah.com/tuikR/
+- [ ] pkgdown site deployed at https://eremrah.com/tuikr/
 - [ ] Home page loads correctly
 - [ ] All three vignettes accessible:
   - [ ] Getting Started
@@ -62,19 +62,19 @@ Final verification before announcing the v0.1.0 release.
 
 - [ ] Installation from GitHub works:
   ```r
-  devtools::install_github("emraher/tuikR")
+  devtools::install_github("emraher/tuikr")
   ```
 - [ ] Installation from release tag works:
   ```r
-  devtools::install_github("emraher/tuikR@v0.1.0")
+  devtools::install_github("emraher/tuikr@v0.1.0")
   ```
 - [ ] Package loads without errors:
   ```r
-  library(tuikR)
+  library(tuikr)
   ```
 - [ ] Version is correct:
   ```r
-  packageVersion("tuikR")  # Should be 0.1.0
+  packageVersion("tuikr")  # Should be 0.1.0
   ```
 
 ### Functionality
@@ -101,7 +101,7 @@ Test all main functions work:
   ```
 - [ ] Vignettes accessible:
   ```r
-  browseVignettes("tuikR")
+  browseVignettes("tuikr")
   ```
 - [ ] README renders correctly on GitHub
 - [ ] NEWS.md is up to date
@@ -118,8 +118,8 @@ Consider these improvements (not required for v0.1.0):
 Add to README.md:
 
 ```markdown
-[![CRAN status](https://www.r-pkg.org/badges/version/tuikR)](https://CRAN.R-project.org/package=tuikR)
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/tuikR)](https://cran.r-project.org/package=tuikR)
+[![CRAN status](https://www.r-pkg.org/badges/version/tuikr)](https://CRAN.R-project.org/package=tuikr)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/tuikr)](https://cran.r-project.org/package=tuikr)
 ```
 
 Note: These will only work after CRAN submission
@@ -130,7 +130,7 @@ Prepare announcement posts:
 
 **Twitter/X:**
 ```
-🎉 tuikR v0.1.0 is now available!
+🎉 tuikr v0.1.0 is now available!
 
 New features:
 📚 Three comprehensive vignettes
@@ -139,15 +139,15 @@ New features:
 
 Access Turkish Statistical Institute data with #rstats
 
-https://github.com/emraher/tuikR
-https://eremrah.com/tuikR/
+https://github.com/emraher/tuikr
+https://eremrah.com/tuikr/
 ```
 
 **LinkedIn:**
 ```
-I'm pleased to announce the release of tuikR version 0.1.0!
+I'm pleased to announce the release of tuikr version 0.1.0!
 
-tuikR is an R package for accessing Turkish Statistical Institute (TUIK) data,
+tuikr is an R package for accessing Turkish Statistical Institute (TUIK) data,
 including statistical tables and geographic data at different NUTS levels.
 
 This release includes:
@@ -156,8 +156,8 @@ This release includes:
 • Improved pkgdown website with articles menu
 • Bug fixes and improvements
 
-Learn more: https://eremrah.com/tuikR/
-GitHub: https://github.com/emraher/tuikR
+Learn more: https://eremrah.com/tuikr/
+GitHub: https://github.com/emraher/tuikr
 ```
 
 ### Community
@@ -176,7 +176,7 @@ Once all checks pass:
 ### 1. Final Git Status
 
 ```bash
-cd /Users/emraher/Workspace/tuikR  # Or wherever the repo is
+cd /Users/emraher/Workspace/tuikr  # Or wherever the repo is
 git status  # Should be clean
 git log --oneline -10  # Review recent commits
 ```
@@ -186,8 +186,8 @@ git log --oneline -10  # Review recent commits
 ```bash
 git remote -v
 # Should show:
-# origin  git@github.com:emraher/tuikR.git (fetch)
-# origin  git@github.com:emraher/tuikR.git (push)
+# origin  git@github.com:emraher/tuikr.git (fetch)
+# origin  git@github.com:emraher/tuikr.git (push)
 ```
 
 ### 3. Tag Local Repository (if not done)
@@ -274,7 +274,7 @@ If critical issues are discovered:
 
 ## Congratulations! 🎉
 
-If all items are checked, the tuikR v0.1.0 release is complete!
+If all items are checked, the tuikr v0.1.0 release is complete!
 
 The package is now:
 - ✅ Properly versioned
@@ -283,4 +283,4 @@ The package is now:
 - ✅ Archived on Zenodo with a DOI
 - ✅ Ready for users
 
-Thank you for improving the tuikR package!
+Thank you for improving the tuikr package!

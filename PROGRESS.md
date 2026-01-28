@@ -1,9 +1,9 @@
-# tuikR Package Improvement Progress
+# tuikr Package Improvement Progress
 
 ## Completed Phases
 
 ### ✅ Phase 1: Critical Fixes (COMPLETED)
-- [x] Fix README installation commands (emraher/tuik → emraher/tuikR)
+- [x] Fix README installation commands (emraher/tuik → emraher/tuikr)
 - [x] Fix geo_data() example parameter name (level → variable_level)
 - [x] Remove deprecated V8 import from geo_map()
 - [x] Add comprehensive examples for geo_data()
@@ -92,7 +92,7 @@ Completed:
 Added configuration:
 ```yaml
 home:
-  title: tuikR - Access Turkish Statistical Institute Data
+  title: tuikr - Access Turkish Statistical Institute Data
   description: ...
   links:
   - text: TUIK Data Portal
@@ -100,7 +100,7 @@ home:
   - text: TUIK Geographic Portal
     href: https://cip.tuik.gov.tr/
   - text: Report an Issue
-    href: https://github.com/emraher/tuikR/issues
+    href: https://github.com/emraher/tuikr/issues
 
 navbar:
   structure:
@@ -170,22 +170,22 @@ Added comprehensive 0.1.0 release notes with sections:
 #### 6.1 GitHub Repository Rename
 **CRITICAL:** Rename repository on GitHub
 - [ ] Go to https://github.com/emraher/tuik/settings
-- [ ] Rename repository from "tuik" to "tuikR"
-- [ ] Update local remote: `git remote set-url origin git@github.com:emraher/tuikR.git`
+- [ ] Rename repository from "tuik" to "tuikr"
+- [ ] Update local remote: `git remote set-url origin git@github.com:emraher/tuikr.git`
 - [ ] Push commits to verify connection
 
-**Note:** All package references already updated to `tuikR` in Phase 1
+**Note:** All package references already updated to `tuikr` in Phase 1
 
 #### 6.2 Zenodo Integration
 - [ ] Verify Zenodo connection at https://zenodo.org/account/settings/github/
-- [ ] Ensure repository toggle is enabled for emraher/tuikR
+- [ ] Ensure repository toggle is enabled for emraher/tuikr
 - [ ] Verify existing DOI (313863336) still works
 - [ ] Enable automatic versioning on GitHub releases
 
 #### 6.3 Verification
 - [ ] Verify Zenodo badge in README works
 - [ ] Check GitHub Actions workflows run successfully
-- [ ] Verify pkgdown site deploys to https://eremrah.com/tuikR/
+- [ ] Verify pkgdown site deploys to https://eremrah.com/tuikr/
 - [ ] Confirm all package URLs work
 
 **After completion:** Update PROGRESS.md to mark Phase 6 as complete
@@ -210,7 +210,7 @@ Added comprehensive 0.1.0 release notes with sections:
 
 #### 7.2 Create GitHub Release v0.1.0
 - [ ] Create tag: v0.1.0
-- [ ] Set title: "tuikR 0.1.0"
+- [ ] Set title: "tuikr 0.1.0"
 - [ ] Copy release notes from `RELEASE_v0.1.0.md`
 - [ ] Publish release
 
@@ -258,7 +258,7 @@ Added comprehensive 0.1.0 release notes with sections:
 - [ ] All tests pass (devtools::check() = 0 errors, 0 warnings, 0 notes)
 - [ ] Documentation regenerated (devtools::document())
 - [ ] pkgdown site builds locally (pkgdown::build_site())
-- [ ] GitHub repository renamed to tuikR
+- [ ] GitHub repository renamed to tuikr
 - [ ] Version updated to 0.1.0 in DESCRIPTION
 - [ ] NEWS.md updated with 0.1.0 changes
 - [ ] CITATION.cff updated with new version and date
@@ -266,7 +266,7 @@ Added comprehensive 0.1.0 release notes with sections:
 - [ ] GitHub release v0.1.0 created
 - [ ] Zenodo archive verified
 - [ ] GitHub Pages deployed and accessible
-- [ ] Installation from GitHub works: `devtools::install_github("emraher/tuikR")`
+- [ ] Installation from GitHub works: `devtools::install_github("emraher/tuikr")`
 
 ---
 
