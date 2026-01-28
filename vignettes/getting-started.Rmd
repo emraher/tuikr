@@ -1,0 +1,221 @@
+---
+title: "Getting Started with tuikR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with tuikR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Introduction
+
+`tuikR` provides access to data from the Turkish Statistical Institute (TUIK/TÜİK). The package connects to two different TUIK portals:
+
+1. **Main TUIK Data Portal** ([data.tuik.gov.tr](https://data.tuik.gov.tr/)): Statistical themes, tables, and databases
+2. **Geographic Statistics Portal** ([cip.tuik.gov.tr](https://cip.tuik.gov.tr/)): Spatial data and maps
+
+This vignette will walk you through the basic workflow for accessing TUIK data.
+
+## Installation
+
+Install the development version from GitHub:
+
+```{r install}
+# install.packages("devtools")
+devtools::install_github("emraher/tuikR")
+```
+
+Load the package:
+
+```{r setup}
+library(tuikR)
+library(tidyverse)
+```
+
+## Basic Workflow: Statistical Data
+
+The typical workflow for accessing statistical data follows three steps:
+
+### Step 1: Discover Themes
+
+TUIK organizes data into 17 thematic categories. Start by listing all available themes:
+
+```{r themes}
+(themes <- statistical_themes())
+```
+
+This returns a tibble with theme names (in Turkish) and their corresponding IDs. For example:
+
+- **110**: Adalet ve Seçim (Justice and Elections)
+- **108**: İstihdam, İşsizlik ve Ücret (Employment, Unemployment, and Wages)
+- **109**: Nüfus ve Demografi (Population and Demography)
+
+### Step 2: Find Tables
+
+Once you've identified a theme of interest, retrieve all available data tables for that theme:
+
+```{r tables}
+# Get tables for Justice and Elections theme
+justice_tables <- statistical_tables("110")
+
+# View the first few tables
+head(justice_tables)
+```
+
+The function returns:
+- `theme_name` and `theme_id`: Theme identification
+- `data_name`: Table description
+- `data_date`: Last update date
+- `datafile_url`: Direct download link for the XLS file
+
+**Important validation:** The `statistical_tables()` function validates your input:
+
+```{r validate, error=TRUE}
+# Invalid theme ID
+statistical_tables("aaa")
+#> Error: You should select a valid theme ID!
+
+# Multiple themes not allowed
+statistical_tables(c("110", "108"))
+#> Error: You can select only one theme!
+```
+
+### Step 3: Get Database URLs
+
+For more comprehensive data, you can retrieve database URLs:
+
+```{r databases}
+justice_dbs <- statistical_databases("110")
+```
+
+This returns database names and URLs for accessing larger datasets.
+
+## Downloading Data Files
+
+Once you have the table URLs, download the Excel files:
+
+```{r download}
+# Download a specific file
+download.file(
+  justice_tables$datafile_url[1],
+  destfile = "/tmp/tuik_data.xls",
+  mode = "wb"
+)
+
+# Read into R
+library(readxl)
+data <- read_xls("/tmp/tuik_data.xls")
+```
+
+**Note:** TUIK Excel files can be messy! They often contain:
+- Multiple header rows
+- Mixed Turkish and English text
+- Source notes at the bottom
+- Irregular formatting
+
+You'll typically need to clean the data after importing. Consider:
+- Skipping header rows
+- Removing footer rows with source information
+- Converting character columns to numeric
+- Standardizing column names with `janitor::clean_names()`
+
+## Organizing Your Downloads
+
+For better file management, create clean filenames:
+
+```{r organize}
+# Create a clean filename from table metadata
+filename <- paste0(
+  janitor::make_clean_names(justice_tables$data_name[1]),
+  "_",
+  janitor::make_clean_names(justice_tables$data_date[1])
+)
+
+# Download with the clean name
+download.file(
+  justice_tables$datafile_url[1],
+  destfile = paste0("/tmp/", filename, ".xls"),
+  mode = "wb"
+)
+```
+
+## Troubleshooting
+
+### Network Issues
+
+If you're having trouble connecting to TUIK servers:
+
+1. Check your internet connection
+2. Verify that TUIK portals are accessible:
+   - [https://data.tuik.gov.tr/](https://data.tuik.gov.tr/)
+   - [https://cip.tuik.gov.tr/](https://cip.tuik.gov.tr/)
+3. See [Issue #2](https://github.com/emraher/tuikR/issues/2) on GitHub for known connection problems
+
+### Website Structure Changes
+
+TUIK occasionally updates their website structure, which can break web scraping functions. If you encounter unexpected errors:
+
+1. Check if there's a newer version of `tuikR`
+2. Report the issue on [GitHub](https://github.com/emraher/tuikR/issues)
+
+### Excel File Problems
+
+If `readxl::read_xls()` fails:
+
+- Try `readxl::read_excel()` instead
+- Use the `skip` parameter to skip header rows
+- Use `n_max` to limit rows and exclude footer content
+- Check the file manually to understand its structure
+
+## Next Steps
+
+- For geographic data and mapping, see `vignette("geographic-mapping")`
+- For known limitations and workarounds, see `vignette("known-issues")`
+- Explore the function documentation: `?statistical_themes`, `?geo_data`, `?geo_map`
+
+## Example: Complete Workflow
+
+Here's a complete example that combines all the steps:
+
+```{r complete}
+library(tuikR)
+library(tidyverse)
+library(readxl)
+
+# 1. Find themes
+themes <- statistical_themes()
+
+# 2. Select a theme (Population and Demography)
+pop_tables <- statistical_tables("109")
+
+# 3. Filter for interesting data
+fertility_data <- pop_tables %>%
+  filter(str_detect(data_name, "Doğum"))
+
+# 4. Download the first table
+temp_file <- tempfile(fileext = ".xls")
+download.file(
+  fertility_data$datafile_url[1],
+  destfile = temp_file,
+  mode = "wb"
+)
+
+# 5. Read and clean
+raw_data <- read_xls(temp_file, skip = 2)  # Skip headers
+clean_data <- raw_data %>%
+  janitor::clean_names() %>%
+  filter(!is.na(x1))  # Remove empty rows
+
+# 6. Analyze
+head(clean_data)
+```
+
+This workflow gives you the foundation for accessing any statistical data from TUIK!
