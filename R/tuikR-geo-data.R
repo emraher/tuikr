@@ -30,8 +30,9 @@
 #' \describe{
 #'   \item{code}{Character. Geographic unit code (NUTS-2, NUTS-3, or LAU-1)}
 #'   \item{date}{Character. Time period (YYYY or YYYY-MM format)}
-#'   \item{[variable_name]}{Numeric/Character. Values for the requested variable.
-#'     Column name matches the variable name (snake_case)}
+#'   \item{variable_name}{Numeric/Character. Values for the requested variable.
+#'     Column name matches the variable name (snake_case). The actual column
+#'     name will vary depending on the variable requested.}
 #' }
 #'
 #' @examples
