@@ -1,22 +1,22 @@
-Package: tuik
+Package: tuikR
 Title: Download Data File And Database Urls from TUIK
 Version: 0.0.2
-Authors@R: 
-    person(given = "Emrah",
-           family = "Er",
-           role = c("aut", "cre"),
-           email = "eer@eremrah.com")
-Description: Download Data File And Database Urls from TUIK.
+Authors@R:
+    person("Emrah", "Er", email = "eer@eremrah.com", role = c("aut", "cre"))
+Description: Download Data File And Database Urls from TUIK (Turkish Statistical Institute).
+    Provides functions to extract statistical tables, databases, and geographic data
+    from the TUIK web portal and geographic statistics portal.
 License: MIT + file LICENSE
+URL: https://github.com/emraher/tuikR, https://eremrah.com/tuikR/
+BugReports: https://github.com/emraher/tuikR/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
-Suggests: 
-    roxygen2,
-    covr,
-    knitr,
-    rmarkdown
-Imports: 
+RoxygenNote: 7.3.3
+Config/testthat/edition: 3
+Config/Needs/website: emraher/eerdown
+Depends:
+    R (>= 3.5.0)
+Imports:
     rlang (>= 0.1.2),
     magrittr,
     crayon,
@@ -34,8 +34,11 @@ Imports:
     tidyr,
     sf,
     rjson
-URL: https://github.com/emraher/tuik
-BugReports: https://github.com/emraher/tuik/issues
-VignetteBuilder: knitr
-Depends: 
+Suggests:
+    testthat (>= 3.0.0),
+    covr,
+    knitr,
+    rmarkdown,
+    pkgdown,
     V8
+VignetteBuilder: knitr

@@ -1,35 +1,17 @@
-# Getting help with tuik
+# Getting help with tuikR
 
-Thanks for using tuik!
-Before filing an issue, there are a few places to explore and pieces to put together to make the process as smooth as possible.
-
-## Make a reprex
-
-Start by making a minimal **repr**oducible **ex**ample using the  [reprex](https://reprex.tidyverse.org/) package. 
-If you haven't heard of or used reprex before, you're in for a treat! 
-Seriously, reprex will make all of your R-question-asking endeavors easier (which is a pretty insane ROI for the five to ten minutes it'll take you to learn what it's all about). 
-For additional reprex pointers, check out the [Get help!](https://www.tidyverse.org/help/) section of the tidyverse site.
+Before filing an issue, create a minimal **repr**oducible **ex**ample using the [reprex](https://reprex.tidyverse.org/) package. This makes it easier to diagnose and fix problems. See the [tidyverse help guide](https://www.tidyverse.org/help/) for more information.
 
 ## Where to ask?
 
-Armed with your reprex, the next step is to figure out [where to ask](https://www.tidyverse.org/help/#where-to-ask). 
+*   **Questions**: Use [community.rstudio.com](https://community.rstudio.com/) or StackOverflow.
 
-*   If it's a question: start with [community.rstudio.com](https://community.rstudio.com/), and/or StackOverflow. There are more people there to answer questions.  
+*   **Bugs**: [File an issue](https://github.com/emraher/tuikR/issues/new).
 
-*   If it's a bug: you're in the right place, [file an issue](https://github.com/emraher/tuik/issues/new).  
-  
-*   If you're not sure: let the community help you figure it out! 
-    If your problem _is_ a bug or a feature request, you can easily return here and report it. 
+*   **Not sure?**: Start with the community forums. Return here if it turns out to be a bug.
 
-Before opening a new issue, be sure to [search issues and pull requests](https://github.com/emraher/tuik/issues) to make sure the bug hasn't been reported and/or already fixed in the development version. 
-By default, the search will be pre-populated with `is:issue is:open`. 
-You can [edit the qualifiers](https://help.github.com/articles/searching-issues-and-pull-requests/)  (e.g. `is:pr`, `is:closed`) as needed. 
-For example, you'd simply remove `is:open` to search _all_ issues in the repo, open or closed.
+[Search existing issues](https://github.com/emraher/tuikR/issues) before opening a new one. The default search is `is:issue is:open`. Remove `is:open` to search all issues, or add `is:pr` or `is:closed` as needed.
 
 ## What happens next?
 
-To be as efficient as possible, development of tidyverse packages tends to be very bursty, so you shouldn't worry if you don't get an immediate response.
-Typically we don't look at a repo until a sufficient quantity of issues accumulates, then there’s a burst of intense activity as we focus our efforts. 
-That makes development more efficient because it avoids expensive context switching between problems, at the cost of taking longer to get back to you. 
-This process makes a good reprex particularly important because it might be multiple months between your initial report and when we start working on it. 
-If we can’t reproduce the bug, we can’t fix it!
+Development tends to happen in bursts when multiple issues accumulate. You may not get an immediate response. A reproducible example is critical - if we can't reproduce the bug, we can't fix it.

@@ -1,0 +1,23 @@
+template:
+  package: eerdown
+  bootstrap: 5
+
+url: https://eremrah.com/tuikR
+
+authors:
+  Emrah Er:
+    href: https://eremrah.com
+
+reference:
+- title: Statistical Data Functions
+  desc: Functions for accessing TUIK statistical data portal
+  contents:
+  - statistical_themes
+  - statistical_tables
+  - statistical_databases
+
+- title: Geographic Data Functions
+  desc: Functions for accessing TUIK geographic statistics portal
+  contents:
+  - geo_data
+  - geo_map

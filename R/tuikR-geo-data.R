@@ -14,7 +14,17 @@
 #'
 #' @examples
 #' \dontrun{
-#' geo_data(level = 2)
+#' # Get metadata for all available variables
+#' geo_data()
+#'
+#' # Get data for a specific variable at NUTS-2 level
+#' geo_data(
+#'   variable_level = 2,
+#'   variable_no = "SNM-GK160951-O33303",
+#'   variable_source = "medas",
+#'   variable_period = "yillik",
+#'   variable_recnum = 5
+#' )
 #' }
 #'
 #' @export

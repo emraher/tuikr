@@ -6,8 +6,6 @@
 #'
 #' @return An sf object or tibble
 #'
-#' @import V8
-#'
 #' @examples
 #' \dontrun{
 #' geo_map(level = 2)
