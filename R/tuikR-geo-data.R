@@ -1,37 +1,16 @@
 #' Get Geographic Data from TUIK
 #'
-#' Downloads geographic statistical data from the TUIK Geographic Portal.
-#' Can be used in two modes: metadata retrieval (no parameters) or data
-#' download (all parameters required).
+#' @param variable_level NUTS Level (2, 3, or 4)
 #'
-#' @param variable_no Character. Data series number (e.g., "SNM-GK160951-O33303").
-#'   Required when downloading data. Find available series using metadata mode.
-#' @param variable_level Numeric. NUTS level: 2 (regional), 3 (provincial), or
-#'   4 (district/LAU-1). Required when downloading data.
-#' @param variable_source Character. Data source: "medas" or "ilGostergeleri".
-#'   Required when downloading data.
-#' @param variable_period Character. Time period: "yillik" (yearly) or "aylik" (monthly).
-#'   Required when downloading data.
-#' @param variable_recnum Numeric. Record number: 3, 5, or 24.
-#'   Required when downloading data.
+#' @param variable_no Data Series Number
 #'
-#' @return When called without parameters: A tibble with 6 columns containing
-#'   metadata for all available variables:
-#' \describe{
-#'   \item{var_name}{Character. Variable name in Turkish}
-#'   \item{var_num}{Character. Variable series number}
-#'   \item{var_levels}{List. Available NUTS levels for this variable}
-#'   \item{var_period}{Character. Time period (yillik/aylik)}
-#'   \item{var_source}{Character. Data source (medas/ilGostergeleri)}
-#'   \item{var_recordnum}{Numeric. Record count}
-#' }
+#' @param variable_source Data Series Source ("medas" or "ilGostergeleri")
 #'
-#' When called with all parameters: A tibble with 3+ columns containing the data:
-#' \describe{
-#'   \item{code}{Character. Geographic area code}
-#'   \item{date}{Character. Time period (YYYY or YYYY-MM)}
-#'   \item{...}{Numeric/Character. Variable-specific data column (name varies)}
-#' }
+#' @param variable_period Data Series Period ("yillik" or "aylik")
+#'
+#' @param variable_recnum Data Series Record Number (3, 5, or 24)
+#'
+#' @return A data tibble
 #'
 #' @examples
 #' \dontrun{
@@ -103,7 +82,17 @@ geo_data <- function(variable_no = NULL,
     purrr::map(~ purrr::pluck(.x, "kayitSayisi")) |>
     unlist()
 
-  # Parse JSON structure using purrr (replaced regex-based string parsing)
+
+  # variable_no <- doc %>%
+  #   stringr::str_extract_all('gostergeNo:"[:alnum:]+-[:alnum:]+-[:alnum:]+') %>%
+  #   purrr::map(~ stringr::str_remove_all(.x, 'gostergeNo:\"')) %>%
+  #   unlist()
+  #
+  # variable_name <- doc %>%
+  #   stringr::str_split("duzeyler") %>%
+  #   purrr::map(~ stringr::str_extract_all(.x, '(?<=gostergeAdi:").*(?=")')) %>%
+  #   unlist()
+
   variable_dt <- tibble::tibble(
     var_name, var_num, var_levels,
     var_period, var_source, var_recordnum
