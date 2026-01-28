@@ -1,16 +1,38 @@
 #' Get Geographic Data from TUIK
 #'
-#' @param variable_level NUTS Level (2, 3, or 4)
+#' Retrieves geographic statistical data from the TUIK geographic portal.
+#' Can be used in two modes: metadata retrieval (no parameters) or
+#' data download (with all parameters specified).
 #'
-#' @param variable_no Data Series Number
+#' @param variable_level NUTS Level (2, 3, or 4). Required for data download.
+#' @param variable_no Character. Data Series Number (e.g., "SNM-GK160951-O33303").
+#'   Obtain from metadata mode. Required for data download.
+#' @param variable_source Character. Data Series Source. Either "medas" or
+#'   "ilGostergeleri". Required for data download.
+#' @param variable_period Character. Data Series Period. Either "yillik" (yearly)
+#'   or "aylik" (monthly). Required for data download.
+#' @param variable_recnum Numeric. Data Series Record Number (3, 5, or 24).
+#'   Number of time periods to retrieve. Required for data download.
 #'
-#' @param variable_source Data Series Source ("medas" or "ilGostergeleri")
+#' @return Returns different structures depending on usage mode:
 #'
-#' @param variable_period Data Series Period ("yillik" or "aylik")
+#' **Metadata mode** (no parameters): A tibble with 6 columns:
+#' \describe{
+#'   \item{var_name}{Character. Turkish name of the variable}
+#'   \item{var_num}{Character. Variable number/code for queries}
+#'   \item{var_levels}{List. Available NUTS levels for this variable}
+#'   \item{var_period}{Character. Time period type ("yillik" or "aylik")}
+#'   \item{var_source}{Character. Data source ("medas" or "ilGostergeleri")}
+#'   \item{var_recordnum}{Numeric. Number of available time periods}
+#' }
 #'
-#' @param variable_recnum Data Series Record Number (3, 5, or 24)
-#'
-#' @return A data tibble
+#' **Data mode** (all parameters): A tibble with 3+ columns:
+#' \describe{
+#'   \item{code}{Character. Geographic unit code (NUTS-2, NUTS-3, or LAU-1)}
+#'   \item{date}{Character. Time period (YYYY or YYYY-MM format)}
+#'   \item{[variable_name]}{Numeric/Character. Values for the requested variable.
+#'     Column name matches the variable name (snake_case)}
+#' }
 #'
 #' @examples
 #' \dontrun{
@@ -83,15 +105,9 @@ geo_data <- function(variable_no = NULL,
     unlist()
 
 
-  # variable_no <- doc %>%
-  #   stringr::str_extract_all('gostergeNo:"[:alnum:]+-[:alnum:]+-[:alnum:]+') %>%
-  #   purrr::map(~ stringr::str_remove_all(.x, 'gostergeNo:\"')) %>%
-  #   unlist()
-  #
-  # variable_name <- doc %>%
-  #   stringr::str_split("duzeyler") %>%
-  #   purrr::map(~ stringr::str_extract_all(.x, '(?<=gostergeAdi:").*(?=")')) %>%
-  #   unlist()
+  # NOTE: Previous implementation used regex string parsing to extract variable
+  # metadata. Replaced with structured JSON parsing using purrr::pluck() for
+  # more reliable data extraction.
 
   variable_dt <- tibble::tibble(
     var_name, var_num, var_levels,

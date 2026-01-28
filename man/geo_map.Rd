@@ -2,58 +2,53 @@
 % Please edit documentation in R/tuikR-geo-map.R
 \name{geo_map}
 \alias{geo_map}
-\title{Get Geographic Boundary Maps from TUIK}
+\title{Get Geographic Maps from TUIK}
 \usage{
 geo_map(level = c(2, 3, 4, 9), dataframe = FALSE)
 }
 \arguments{
-\item{level}{Numeric. Geographic level:
+\item{level}{Numeric. Administrative level to retrieve:
 \describe{
-\item{2}{NUTS-2 (26 regions) - MULTIPOLYGON}
-\item{3}{NUTS-3 (81 provinces) - MULTIPOLYGON}
-\item{4}{LAU-1 (973 districts) - MULTIPOLYGON}
-\item{9}{Settlement points (1000+ locations) - POINT}
+\item{2}{NUTS-2 (İstatistiki Bölge Birimleri Sınıflaması - Level 2)}
+\item{3}{NUTS-3 / Provincial level (İl)}
+\item{4}{LAU-1 / District level (İlçe)}
+\item{9}{Settlement points (Yerleşim yerleri) - returns POINT geometries}
 }}
 
 \item{dataframe}{Logical. If TRUE, returns a regular tibble without geometry.
-If FALSE (default), returns an sf object.}
+If FALSE (default), returns an sf object with spatial data.}
 }
 \value{
-An sf object (or tibble if dataframe = TRUE) with WGS 84 CRS (EPSG:4326).
+An sf object (or tibble if dataframe = TRUE) with different columns
+depending on the level:
 
-For levels 2, 3, 4 (MULTIPOLYGON):
+\strong{Levels 2, 3, 4} return MULTIPOLYGON geometries with columns:
 \describe{
-\item{code}{Character. Geographic area code (duzeyKodu)}
-\item{bolgeKodu}{Character. Regional code}
+\item{code}{Character. Unique geographic code}
+\item{bolgeKodu}{Character. NUTS region code}
 \item{nutsKodu}{Character. NUTS classification code}
-\item{name}{Character. English name}
-\item{ad}{Character. Turkish name}
-\item{geometry}{MULTIPOLYGON. Boundary geometry}
+\item{name}{Character. Geographic unit name (often in English)}
+\item{ad}{Character. Geographic unit name in Turkish}
+\item{geometry}{sfc_MULTIPOLYGON. Spatial boundaries (WGS 84)}
 }
 
-For level 9 (POINT):
+\strong{Level 9} returns POINT geometries with columns:
 \describe{
-\item{ad}{Character. Settlement name}
-\item{tp}{Numeric. Type indicator}
-\item{bs}{Numeric. Status indicator}
-\item{bm}{Numeric. Municipality indicator}
-\item{geometry}{POINT. Location coordinates}
+\item{ad}{Character. Settlement name in Turkish}
+\item{tp}{Integer. Settlement type code}
+\item{bs}{Integer. Classification code}
+\item{bm}{Integer. Additional classification}
+\item{geometry}{sfc_POINT. Point coordinates (WGS 84)}
 }
 }
 \description{
-Downloads geographic boundary data from the TUIK Geographic Portal as sf objects
-for creating choropleth maps and spatial analysis.
+Downloads spatial boundary data from the TUIK geographic portal at different
+administrative levels. Returns simple features (sf) objects with geometries
+in WGS 84 coordinate reference system (EPSG:4326).
 }
 \examples{
 \dontrun{
-# Get provincial boundaries (NUTS-3)
-provinces <- geo_map(level = 3)
-
-# Get settlement points
-settlements <- geo_map(level = 9)
-
-# Get data without geometry
-districts_df <- geo_map(level = 4, dataframe = TRUE)
+geo_map(level = 2)
 }
 
 }

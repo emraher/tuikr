@@ -1,10 +1,41 @@
-#' Get Maps from TUIK
+#' Get Geographic Maps from TUIK
 #'
-#' @param level NUTS Level (2, 3, 4, or 9)
+#' Downloads spatial boundary data from the TUIK geographic portal at different
+#' administrative levels. Returns simple features (sf) objects with geometries
+#' in WGS 84 coordinate reference system (EPSG:4326).
 #'
-#' @param dataframe Return data as data frame
+#' @param level Numeric. Administrative level to retrieve:
+#' \describe{
+#'   \item{2}{NUTS-2 (İstatistiki Bölge Birimleri Sınıflaması - Level 2)}
+#'   \item{3}{NUTS-3 / Provincial level (İl)}
+#'   \item{4}{LAU-1 / District level (İlçe)}
+#'   \item{9}{Settlement points (Yerleşim yerleri) - returns POINT geometries}
+#' }
 #'
-#' @return An sf object or tibble
+#' @param dataframe Logical. If TRUE, returns a regular tibble without geometry.
+#'   If FALSE (default), returns an sf object with spatial data.
+#'
+#' @return An sf object (or tibble if dataframe = TRUE) with different columns
+#'   depending on the level:
+#'
+#' **Levels 2, 3, 4** return MULTIPOLYGON geometries with columns:
+#' \describe{
+#'   \item{code}{Character. Unique geographic code}
+#'   \item{bolgeKodu}{Character. NUTS region code}
+#'   \item{nutsKodu}{Character. NUTS classification code}
+#'   \item{name}{Character. Geographic unit name (often in English)}
+#'   \item{ad}{Character. Geographic unit name in Turkish}
+#'   \item{geometry}{sfc_MULTIPOLYGON. Spatial boundaries (WGS 84)}
+#' }
+#'
+#' **Level 9** returns POINT geometries with columns:
+#' \describe{
+#'   \item{ad}{Character. Settlement name in Turkish}
+#'   \item{tp}{Integer. Settlement type code}
+#'   \item{bs}{Integer. Classification code}
+#'   \item{bm}{Integer. Additional classification}
+#'   \item{geometry}{sfc_POINT. Point coordinates (WGS 84)}
+#' }
 #'
 #' @examples
 #' \dontrun{
@@ -19,24 +50,9 @@ geo_map <- function(level = c(2, 3, 4, 9), dataframe = FALSE) {
     if (!(level %in% c(2, 3, 4, 9))) stop("There's no IBBS at this level!")
   }
 
-  # query_url <- dplyr::case_when(
-  #   level == 2 ~ "https://cip.tuik.gov.tr/assets/nuts2.min.js",
-  #   level == 3 ~ "https://cip.tuik.gov.tr/assets/nuts3.min.js",
-  #   level == 4 ~ "https://cip.tuik.gov.tr/assets/nuts4.min.js",
-  #   level == 9 ~ "https://cip.tuik.gov.tr/assets/yerlesim_noktalari.min.js"
-  # )
-  #
-  # ctx <- v8()
-  # src <- ctx$source(query_url)
-  # ctx$eval(src)
-  #
-  # dt_sf <- ctx$get(ctx$get(JS("Object.keys(global)"))[4]) %>%
-  #   jsonlite::toJSON() %>%
-  #   stringr::str_replace_all(
-  #     '\\[\"FeatureCollection\"\\]',
-  #     '\"FeatureCollection\"'
-  #   ) %>%
-  #   sf::read_sf()
+  # NOTE: Previous implementation used V8 package to execute JavaScript and
+  # extract geometry from .min.js files. Replaced with direct JSON parsing
+  # from .json endpoints for simpler dependency management and better performance.
 
   query_url <- dplyr::case_when(
     level == 2 ~ "https://cip.tuik.gov.tr/assets/geometri/nuts2.json",
