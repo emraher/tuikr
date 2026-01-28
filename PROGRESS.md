@@ -157,77 +157,103 @@ Added comprehensive 0.1.0 release notes with sections:
 - [x] Updated version: 0.1.0
 - [x] Updated date-released: 2026-01-28
 
-**Commit:** (pending) - "Phase 5: Version 0.1.0 release preparation"
+**Commit:** 2814117 - "Phase 5: Version 0.1.0 release preparation"
 
 ---
 
 ### Phase 6: Zenodo Integration
 
+**Status:** Requires manual actions on GitHub and Zenodo websites
+
+**Instructions:** See `PHASE6_MANUAL_INSTRUCTIONS.md` for detailed step-by-step guide
+
 #### 6.1 GitHub Repository Rename
 **CRITICAL:** Rename repository on GitHub
-- Old: emraher/tuik
-- New: emraher/tuikR
+- [ ] Go to https://github.com/emraher/tuik/settings
+- [ ] Rename repository from "tuik" to "tuikR"
+- [ ] Update local remote: `git remote set-url origin git@github.com:emraher/tuikR.git`
+- [ ] Push commits to verify connection
 
-Steps:
-1. Go to https://github.com/emraher/tuik/settings
-2. Rename repository to "tuikR"
-3. GitHub will redirect old URLs automatically
-4. Update local remote: `git remote set-url origin git@github.com:emraher/tuikR.git`
+**Note:** All package references already updated to `tuikR` in Phase 1
 
-#### 6.2 Update Zenodo
-- Link GitHub repository emraher/tuikR to existing Zenodo record (DOI: 313863336)
-- Enable automatic versioning if not already enabled
-- Create GitHub release v0.1.0 (will trigger Zenodo archival)
+#### 6.2 Zenodo Integration
+- [ ] Verify Zenodo connection at https://zenodo.org/account/settings/github/
+- [ ] Ensure repository toggle is enabled for emraher/tuikR
+- [ ] Verify existing DOI (313863336) still works
+- [ ] Enable automatic versioning on GitHub releases
 
-#### 6.3 Verify Badges
-- Ensure Zenodo badge works after repository rename
-- Add additional badges if desired (version, CRAN status placeholder)
+#### 6.3 Verification
+- [ ] Verify Zenodo badge in README works
+- [ ] Check GitHub Actions workflows run successfully
+- [ ] Verify pkgdown site deploys to https://eremrah.com/tuikR/
+- [ ] Confirm all package URLs work
+
+**After completion:** Update PROGRESS.md to mark Phase 6 as complete
+
+**Preparation:** Created `PHASE6_MANUAL_INSTRUCTIONS.md` with detailed step-by-step guide
 
 ---
 
 ### Phase 7: GitHub Repository Configuration
 
+**Status:** Requires manual actions after Phase 6 completion
+
+**Instructions:** See `PHASE7_MANUAL_INSTRUCTIONS.md` for detailed step-by-step guide
+
+**Release Template:** See `RELEASE_v0.1.0.md` for GitHub release description
+
 #### 7.1 Repository Settings
-- Description: "R package for accessing Turkish Statistical Institute (TUIK) data"
-- Topics: r, rstats, tuik, turkey, statistics, geographic-data, spatial-data
-- Enable GitHub Pages from gh-pages branch (for pkgdown)
+- [ ] Set repository description
+- [ ] Add repository topics (r, rstats, tuik, turkey, statistics, geographic-data, spatial-data)
+- [ ] Configure GitHub Pages (gh-pages branch)
+- [ ] Verify website URL
 
 #### 7.2 Create GitHub Release v0.1.0
-Tag: v0.1.0
-Title: "tuikR 0.1.0"
-Description: Copy from NEWS.md
+- [ ] Create tag: v0.1.0
+- [ ] Set title: "tuikR 0.1.0"
+- [ ] Copy release notes from `RELEASE_v0.1.0.md`
+- [ ] Publish release
 
-This triggers:
-- pkgdown website deployment
-- Zenodo automatic archival
+**After completion:** Update PROGRESS.md to mark Phase 7 as complete
 
 ---
 
 ### Phase 8: Testing & Validation
 
+**Status:** Automated and manual testing required
+
+**Test Script:** See `PHASE8_TESTING_SCRIPT.R` for comprehensive validation
+
 #### 8.1 Comprehensive Testing
-```r
-devtools::document()
-devtools::test()
-devtools::check()
-pkgdown::build_site()
-```
+- [ ] Run `devtools::document()` - Documentation generation
+- [ ] Run `devtools::test()` - Unit tests
+- [ ] Run `devtools::check()` - R CMD check (0 errors, 0 warnings, 0 notes)
+- [ ] Run `pkgdown::build_site()` - Website build
 
 #### 8.2 Manual Function Testing
-- Test network-dependent functions
-- Verify geographic data downloads work
-- Test map rendering with different NUTS levels
-- Verify examples run without errors
+- [ ] Test `statistical_themes()` - Returns theme list
+- [ ] Test `statistical_tables("110")` - Returns tables
+- [ ] Test `statistical_databases("110")` - Returns databases
+- [ ] Test `geo_data()` - Returns variable metadata
+- [ ] Test `geo_data()` with parameters - Downloads data
+- [ ] Test `geo_map(2)`, `geo_map(3)`, `geo_map(4)`, `geo_map(9)` - All NUTS levels
 
 #### 8.3 Documentation Review
-- Read through all vignettes
-- Check pkgdown site rendering
-- Verify all links work
-- Test search functionality
+- [ ] Read through all vignettes for accuracy
+- [ ] Check pkgdown site rendering
+- [ ] Verify all internal links work
+- [ ] Test search functionality
+- [ ] Verify examples run without errors
+
+**After completion:** Update PROGRESS.md to mark Phase 8 as complete
 
 ---
 
 ### Phase 9: Deployment Checklist
+
+**Status:** Final verification before announcement
+
+**Checklist:** See `PHASE9_DEPLOYMENT_CHECKLIST.md` for complete verification list
 
 - [ ] All tests pass (devtools::check() = 0 errors, 0 warnings, 0 notes)
 - [ ] Documentation regenerated (devtools::document())
