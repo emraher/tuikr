@@ -2,22 +2,40 @@
 % Please edit documentation in R/tuikR-statistical-databases.R
 \name{statistical_databases}
 \alias{statistical_databases}
-\title{Get List of All Databases for a given Theme from TUIK}
+\title{Get Statistical Databases for a Theme from TUIK}
 \usage{
 statistical_databases(theme)
 }
 \arguments{
-\item{theme}{Data Theme}
+\item{theme}{Character or numeric. A single theme ID (e.g., "110" or 110).
+Only one theme can be queried at a time. Invalid or multiple theme IDs
+will return an error with a list of valid themes.}
 }
 \value{
-A data tibble
+A tibble with 4 columns:
+\describe{
+\item{theme_name}{Character. Turkish name of the statistical theme}
+\item{theme_id}{Character. Numeric ID of the theme}
+\item{db_name}{Character. Name of the interactive database}
+\item{db_url}{Character. URL to access the database interface}
+}
 }
 \description{
-Get List of All Databases for a given Theme from TUIK
+Retrieves interactive database URLs for a specific theme from the TUIK data
+portal. Theme IDs can be obtained using \code{\link{statistical_themes}}.
+}
+\note{
+Some database links may become unavailable if TUIK changes their
+website structure. Database URLs lead to interactive query interfaces,
+not direct downloads.
 }
 \examples{
 \dontrun{
-statistical_databases(102)
+# Get databases for a specific theme
+databases <- statistical_databases(110)
+
+# View available databases
+print(databases)
 }
 
 }

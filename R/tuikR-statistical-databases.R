@@ -1,12 +1,31 @@
-#' Get List of All Databases for a given Theme from TUIK
+#' Get Statistical Databases for a Theme from TUIK
 #'
-#' @param theme Data Theme
-
-#' @return A data tibble
+#' Retrieves interactive database URLs for a specific theme from the TUIK data
+#' portal. Theme IDs can be obtained using \code{\link{statistical_themes}}.
+#'
+#' @param theme Character or numeric. A single theme ID (e.g., "110" or 110).
+#'   Only one theme can be queried at a time. Invalid or multiple theme IDs
+#'   will return an error with a list of valid themes.
+#'
+#' @return A tibble with 4 columns:
+#' \describe{
+#'   \item{theme_name}{Character. Turkish name of the statistical theme}
+#'   \item{theme_id}{Character. Numeric ID of the theme}
+#'   \item{db_name}{Character. Name of the interactive database}
+#'   \item{db_url}{Character. URL to access the database interface}
+#' }
+#'
+#' @note Some database links may become unavailable if TUIK changes their
+#'   website structure. Database URLs lead to interactive query interfaces,
+#'   not direct downloads.
 #'
 #' @examples
 #' \dontrun{
-#' statistical_databases(102)
+#' # Get databases for a specific theme
+#' databases <- statistical_databases(110)
+#'
+#' # View available databases
+#' print(databases)
 #' }
 #'
 #' @export

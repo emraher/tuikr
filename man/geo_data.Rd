@@ -13,21 +13,44 @@ geo_data(
 )
 }
 \arguments{
-\item{variable_no}{Data Series Number}
+\item{variable_no}{Character. Data series number (e.g., "SNM-GK160951-O33303").
+Required when downloading data. Find available series using metadata mode.}
 
-\item{variable_level}{NUTS Level (2, 3, or 4)}
+\item{variable_level}{Numeric. NUTS level: 2 (regional), 3 (provincial), or
+4 (district/LAU-1). Required when downloading data.}
 
-\item{variable_source}{Data Series Source ("medas" or "ilGostergeleri")}
+\item{variable_source}{Character. Data source: "medas" or "ilGostergeleri".
+Required when downloading data.}
 
-\item{variable_period}{Data Series Period ("yillik" or "aylik")}
+\item{variable_period}{Character. Time period: "yillik" (yearly) or "aylik" (monthly).
+Required when downloading data.}
 
-\item{variable_recnum}{Data Series Record Number (3, 5, or 24)}
+\item{variable_recnum}{Numeric. Record number: 3, 5, or 24.
+Required when downloading data.}
 }
 \value{
-A data tibble
+When called without parameters: A tibble with 6 columns containing
+metadata for all available variables:
+\describe{
+\item{var_name}{Character. Variable name in Turkish}
+\item{var_num}{Character. Variable series number}
+\item{var_levels}{List. Available NUTS levels for this variable}
+\item{var_period}{Character. Time period (yillik/aylik)}
+\item{var_source}{Character. Data source (medas/ilGostergeleri)}
+\item{var_recordnum}{Numeric. Record count}
+}
+
+When called with all parameters: A tibble with 3+ columns containing the data:
+\describe{
+\item{code}{Character. Geographic area code}
+\item{date}{Character. Time period (YYYY or YYYY-MM)}
+\item{...}{Numeric/Character. Variable-specific data column (name varies)}
+}
 }
 \description{
-Get Geographic Data from TUIK
+Downloads geographic statistical data from the TUIK Geographic Portal.
+Can be used in two modes: metadata retrieval (no parameters) or data
+download (all parameters required).
 }
 \examples{
 \dontrun{

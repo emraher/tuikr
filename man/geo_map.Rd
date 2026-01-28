@@ -2,24 +2,58 @@
 % Please edit documentation in R/tuikR-geo-map.R
 \name{geo_map}
 \alias{geo_map}
-\title{Get Maps from TUIK}
+\title{Get Geographic Boundary Maps from TUIK}
 \usage{
 geo_map(level = c(2, 3, 4, 9), dataframe = FALSE)
 }
 \arguments{
-\item{level}{NUTS Level (2, 3, 4, or 9)}
+\item{level}{Numeric. Geographic level:
+\describe{
+\item{2}{NUTS-2 (26 regions) - MULTIPOLYGON}
+\item{3}{NUTS-3 (81 provinces) - MULTIPOLYGON}
+\item{4}{LAU-1 (973 districts) - MULTIPOLYGON}
+\item{9}{Settlement points (1000+ locations) - POINT}
+}}
 
-\item{dataframe}{Return data as data frame}
+\item{dataframe}{Logical. If TRUE, returns a regular tibble without geometry.
+If FALSE (default), returns an sf object.}
 }
 \value{
-An sf object or tibble
+An sf object (or tibble if dataframe = TRUE) with WGS 84 CRS (EPSG:4326).
+
+For levels 2, 3, 4 (MULTIPOLYGON):
+\describe{
+\item{code}{Character. Geographic area code (duzeyKodu)}
+\item{bolgeKodu}{Character. Regional code}
+\item{nutsKodu}{Character. NUTS classification code}
+\item{name}{Character. English name}
+\item{ad}{Character. Turkish name}
+\item{geometry}{MULTIPOLYGON. Boundary geometry}
+}
+
+For level 9 (POINT):
+\describe{
+\item{ad}{Character. Settlement name}
+\item{tp}{Numeric. Type indicator}
+\item{bs}{Numeric. Status indicator}
+\item{bm}{Numeric. Municipality indicator}
+\item{geometry}{POINT. Location coordinates}
+}
 }
 \description{
-Get Maps from TUIK
+Downloads geographic boundary data from the TUIK Geographic Portal as sf objects
+for creating choropleth maps and spatial analysis.
 }
 \examples{
 \dontrun{
-geo_map(level = 2)
+# Get provincial boundaries (NUTS-3)
+provinces <- geo_map(level = 3)
+
+# Get settlement points
+settlements <- geo_map(level = 9)
+
+# Get data without geometry
+districts_df <- geo_map(level = 4, dataframe = TRUE)
 }
 
 }

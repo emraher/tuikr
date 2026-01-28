@@ -2,19 +2,29 @@
 % Please edit documentation in R/tuikR-statistical-themes.R
 \name{statistical_themes}
 \alias{statistical_themes}
-\title{Get Statistical Themes and URLS from TUIK}
+\title{Get Statistical Themes and URLs from TUIK}
 \usage{
 statistical_themes()
 }
 \value{
-A tibble
+A tibble with 2 columns:
+\describe{
+\item{theme_name}{Character. Turkish name of the statistical theme}
+\item{theme_id}{Character. Numeric ID used to query tables and databases}
+}
 }
 \description{
-Get Statistical Themes and URLS from TUIK
+Retrieves all available statistical themes from the TUIK data portal.
+Theme IDs are used with \code{\link{statistical_tables}} and
+\code{\link{statistical_databases}} to access specific data.
 }
 \examples{
 \dontrun{
-statistical_themes()
+# Get all available themes
+themes <- statistical_themes()
+
+# View theme names and IDs
+print(themes)
 }
 
 }

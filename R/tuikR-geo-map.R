@@ -1,14 +1,49 @@
-#' Get Maps from TUIK
+#' Get Geographic Boundary Maps from TUIK
 #'
-#' @param level NUTS Level (2, 3, 4, or 9)
+#' Downloads geographic boundary data from the TUIK Geographic Portal as sf objects
+#' for creating choropleth maps and spatial analysis.
 #'
-#' @param dataframe Return data as data frame
+#' @param level Numeric. Geographic level:
+#' \describe{
+#'   \item{2}{NUTS-2 (26 regions) - MULTIPOLYGON}
+#'   \item{3}{NUTS-3 (81 provinces) - MULTIPOLYGON}
+#'   \item{4}{LAU-1 (973 districts) - MULTIPOLYGON}
+#'   \item{9}{Settlement points (1000+ locations) - POINT}
+#' }
+#' @param dataframe Logical. If TRUE, returns a regular tibble without geometry.
+#'   If FALSE (default), returns an sf object.
 #'
-#' @return An sf object or tibble
+#' @return An sf object (or tibble if dataframe = TRUE) with WGS 84 CRS (EPSG:4326).
+#'
+#' For levels 2, 3, 4 (MULTIPOLYGON):
+#' \describe{
+#'   \item{code}{Character. Geographic area code (duzeyKodu)}
+#'   \item{bolgeKodu}{Character. Regional code}
+#'   \item{nutsKodu}{Character. NUTS classification code}
+#'   \item{name}{Character. English name}
+#'   \item{ad}{Character. Turkish name}
+#'   \item{geometry}{MULTIPOLYGON. Boundary geometry}
+#' }
+#'
+#' For level 9 (POINT):
+#' \describe{
+#'   \item{ad}{Character. Settlement name}
+#'   \item{tp}{Numeric. Type indicator}
+#'   \item{bs}{Numeric. Status indicator}
+#'   \item{bm}{Numeric. Municipality indicator}
+#'   \item{geometry}{POINT. Location coordinates}
+#' }
 #'
 #' @examples
 #' \dontrun{
-#' geo_map(level = 2)
+#' # Get provincial boundaries (NUTS-3)
+#' provinces <- geo_map(level = 3)
+#'
+#' # Get settlement points
+#' settlements <- geo_map(level = 9)
+#'
+#' # Get data without geometry
+#' districts_df <- geo_map(level = 4, dataframe = TRUE)
 #' }
 #'
 #' @export
@@ -19,25 +54,7 @@ geo_map <- function(level = c(2, 3, 4, 9), dataframe = FALSE) {
     if (!(level %in% c(2, 3, 4, 9))) stop("There's no IBBS at this level!")
   }
 
-  # query_url <- dplyr::case_when(
-  #   level == 2 ~ "https://cip.tuik.gov.tr/assets/nuts2.min.js",
-  #   level == 3 ~ "https://cip.tuik.gov.tr/assets/nuts3.min.js",
-  #   level == 4 ~ "https://cip.tuik.gov.tr/assets/nuts4.min.js",
-  #   level == 9 ~ "https://cip.tuik.gov.tr/assets/yerlesim_noktalari.min.js"
-  # )
-  #
-  # ctx <- v8()
-  # src <- ctx$source(query_url)
-  # ctx$eval(src)
-  #
-  # dt_sf <- ctx$get(ctx$get(JS("Object.keys(global)"))[4]) %>%
-  #   jsonlite::toJSON() %>%
-  #   stringr::str_replace_all(
-  #     '\\[\"FeatureCollection\"\\]',
-  #     '\"FeatureCollection\"'
-  #   ) %>%
-  #   sf::read_sf()
-
+  # Direct JSON endpoints (replaced V8-based JavaScript execution for simplicity)
   query_url <- dplyr::case_when(
     level == 2 ~ "https://cip.tuik.gov.tr/assets/geometri/nuts2.json",
     level == 3 ~ "https://cip.tuik.gov.tr/assets/geometri/nuts3.json",

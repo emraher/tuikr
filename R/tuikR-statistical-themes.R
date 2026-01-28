@@ -1,10 +1,22 @@
-#' Get Statistical Themes and URLS from TUIK
+#' Get Statistical Themes and URLs from TUIK
 #'
-#' @return A tibble
+#' Retrieves all available statistical themes from the TUIK data portal.
+#' Theme IDs are used with \code{\link{statistical_tables}} and
+#' \code{\link{statistical_databases}} to access specific data.
+#'
+#' @return A tibble with 2 columns:
+#' \describe{
+#'   \item{theme_name}{Character. Turkish name of the statistical theme}
+#'   \item{theme_id}{Character. Numeric ID used to query tables and databases}
+#' }
 #'
 #' @examples
 #' \dontrun{
-#' statistical_themes()
+#' # Get all available themes
+#' themes <- statistical_themes()
+#'
+#' # View theme names and IDs
+#' print(themes)
 #' }
 #'
 #' @export
