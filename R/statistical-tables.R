@@ -42,45 +42,46 @@ statistical_tables <- function(theme) {
   )
 
   resp <- make_request(request_url)
+  doc <- xml2::read_html(resp)
 
-  doc <- resp %>%
-    xml2::read_html()
+  table_data <- doc |>
+    rvest::html_table() |>
+    purrr::pluck(1) |>
+    dplyr::select(1:2) |>
+    dplyr::filter(.data$X2 != "") |>
+    dplyr::mutate(
+      X1 = stringr::str_remove_all(
+        .data$X1,
+        "\\u0130statistiksel Tablolar(Yeni)?(\r?\n[ ]+)?"
+      )
+    ) |>
+    purrr::set_names("data_name", "data_date")
 
-  table_names <- doc %>%
-    rvest::html_table() %>%
-    `[[`(1) %>%
-    dplyr::select(-X3, -X4) %>%
-    dplyr::filter(X2 != "") %>%
-    dplyr::mutate(X1 = stringr::str_remove_all(X1, "\\u0130statistiksel TablolarYeni\r\n[ ]+")) %>%
-    dplyr::mutate(X1 = stringr::str_remove_all(X1, "\\u0130statistiksel Tablolar\r\n[ ]+")) |>
-    dplyr::mutate(X1 = stringr::str_remove_all(X1, "\\u0130statistiksel Tablolar\n[ ]+"))
+  table_links <- doc |>
+    rvest::html_nodes("a")
 
-  table_urls <- doc %>%
-    rvest::html_nodes("a") %>%
-    rvest::html_attr("href")
+  table_urls <- tibble::tibble(
+    url = rvest::html_attr(table_links, "href"),
+    title = rvest::html_attr(table_links, "title")
+  ) |>
+    dplyr::filter(.data$title != "Tablo Metaverisi") |>
+    dplyr::mutate(url = paste0("http://data.tuik.gov.tr", .data$url)) |>
+    dplyr::pull(.data$url)
 
-  table_meta <- doc %>%
-    rvest::html_nodes("a") %>%
-    rvest::html_attr("title")
+  theme_info <- sthemes |>
+    dplyr::filter(.data$theme_id %in% theme)
 
-  table_urls <- tibble::tibble(table_urls, table_meta) %>%
-    dplyr::filter(table_meta != "Tablo Metaverisi") %>%
-    dplyr::select(-table_meta) %>%
-    dplyr::mutate(table_urls = paste0("http://data.tuik.gov.tr", table_urls))
+  mylocale <- if (Sys.info()["sysname"] == "Windows") {
+    "Turkish_Turkey.utf8"
+  } else {
+    "tr_TR"
+  }
 
-  sthemes <- sthemes %>%
-    dplyr::filter(theme_id %in% theme)
-
-  # Quick fix for locale
-  mylocale <- dplyr::if_else(Sys.info()["sysname"] == "Windows", "Turkish_Turkey.utf8", "tr_TR")
-
-
-  st <- tibble::tibble(table_names, table_urls) %>%
-    purrr::set_names("data_name", "data_date", "datafile_url") %>%
-    dplyr::mutate(data_date = lubridate::dmy(data_date, locale = mylocale)) %>%
-    dplyr::bind_cols(sthemes) %>%
-    dplyr::select(theme_name, theme_id, tidyselect::everything())
-
-
-  return(st)
+  tibble::tibble(
+    theme_name = theme_info$theme_name,
+    theme_id = theme_info$theme_id,
+    data_name = table_data$data_name,
+    data_date = lubridate::dmy(table_data$data_date, locale = mylocale),
+    datafile_url = table_urls
+  )
 }

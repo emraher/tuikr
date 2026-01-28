@@ -1,9 +1,9 @@
-# Contributing to tuikR
+# Contributing to tuikr
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/tuikR.git`
+2. Clone your fork: `git clone https://github.com/your-username/tuikr.git`
 3. Create a branch: `git checkout -b feature/your-feature-name`
 
 ## Development Workflow

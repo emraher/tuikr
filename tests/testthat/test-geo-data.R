@@ -13,6 +13,6 @@ test_that("geo_data returns metadata without parameters", {
 test_that("geo_data validates NUTS level", {
   expect_error(
     geo_data(variable_level = 5),
-    "There's no IBBS at this level!"
+    "variable_level must be 2, 3, or 4"
   )
 })

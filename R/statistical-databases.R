@@ -29,7 +29,6 @@
 #' }
 #'
 #' @export
-
 statistical_databases <- function(theme) {
   sthemes <- check_theme_id(theme)
 
@@ -41,21 +40,18 @@ statistical_databases <- function(theme) {
 
   resp <- make_request(request_url)
 
-  doc <- resp %>%
-    xml2::read_html()
+  doc <- xml2::read_html(resp)
 
-  db_name <- doc %>%
-    rvest::html_nodes("a") %>%
-    rvest::html_text()
+  db_links <- doc |>
+    rvest::html_nodes("a")
 
-  db_url <- doc %>%
-    rvest::html_nodes("a") %>%
-    rvest::html_attr("href")
-
-  sthemes <- statistical_themes() %>%
+  theme_info <- sthemes |>
     dplyr::filter(.data$theme_id %in% theme)
 
-  db <- tibble::tibble(db_name, db_url) %>%
-    dplyr::bind_cols(sthemes) %>%
-    dplyr::select(.data$theme_name, .data$theme_id, tidyselect::everything())
+  tibble::tibble(
+    theme_name = theme_info$theme_name,
+    theme_id = theme_info$theme_id,
+    db_name = rvest::html_text(db_links),
+    db_url = rvest::html_attr(db_links, "href")
+  )
 }

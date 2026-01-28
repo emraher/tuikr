@@ -43,53 +43,41 @@
 #' }
 #'
 #' @export
-geo_map <- function(level = c(2, 3, 4, 9), dataframe = FALSE) {
-  if (is.null(level)) {
-    level <- 9
-  } else {
-    if (!(level %in% c(2, 3, 4, 9))) stop("There's no IBBS at this level!")
+geo_map <- function(level = 2, dataframe = FALSE) {
+  if (!(level %in% c(2, 3, 4, 9))) {
+    stop("level must be 2, 3, 4, or 9")
   }
 
-  # NOTE: Previous implementation used V8 package to execute JavaScript and
-  # extract geometry from .min.js files. Replaced with direct JSON parsing
-  # from .json endpoints for simpler dependency management and better performance.
-
-  query_url <- dplyr::case_when(
-    level == 2 ~ "https://cip.tuik.gov.tr/assets/geometri/nuts2.json",
-    level == 3 ~ "https://cip.tuik.gov.tr/assets/geometri/nuts3.json",
-    level == 4 ~ "https://cip.tuik.gov.tr/assets/geometri/nuts4.json",
-    level == 9 ~ "https://cip.tuik.gov.tr/assets/geometri/yerlesim_noktalari.json"
+  urls <- c(
+    "2" = "https://cip.tuik.gov.tr/assets/geometri/nuts2.json",
+    "3" = "https://cip.tuik.gov.tr/assets/geometri/nuts3.json",
+    "4" = "https://cip.tuik.gov.tr/assets/geometri/nuts4.json",
+    "9" = "https://cip.tuik.gov.tr/assets/geometri/yerlesim_noktalari.json"
   )
 
-  tryCatch(
-    expr = {
-      dat <- jsonlite::fromJSON(query_url)
-    },
+  query_url <- urls[as.character(level)]
+
+  map_json_data <- tryCatch(
+    jsonlite::fromJSON(query_url),
     error = function(e) {
-      stop(paste0("Mapping is not available at this NUTS level (level = ", level, ")!!!"))
+      stop("Map data not available at level ", level)
     }
   )
 
-
-  dt_sf <- dat %>%
-    jsonlite::toJSON() %>%
-    stringr::str_replace_all(
-      '\\[\"FeatureCollection\"\\]',
-      '\"FeatureCollection\"'
-    ) %>%
+  dt_sf <- map_json_data |>
+    jsonlite::toJSON() |>
+    stringr::str_replace_all('\\[\"FeatureCollection\"\\]', '\"FeatureCollection\"') |>
     sf::read_sf()
 
   if (level != 9) {
-    dt_sf <- dt_sf %>%
-      dplyr::rename("code" = "duzeyKodu") %>%
-      dplyr::mutate(code = as.character(code))
+    dt_sf <- dt_sf |>
+      dplyr::rename(code = .data$duzeyKodu) |>
+      dplyr::mutate(code = as.character(.data$code))
   }
 
-
-  if (dataframe == FALSE) {
+  if (!dataframe) {
     return(dt_sf)
-  } else {
-    dt <- sf::st_drop_geometry(dt_sf)
-    return(dt)
   }
+
+  sf::st_drop_geometry(dt_sf)
 }

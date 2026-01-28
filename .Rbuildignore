@@ -13,3 +13,6 @@
 ^README_cache$
 ^\.lintr$
 ^CLAUDE\.md$
+^CITATION\.cff$
+^CONTRIBUTING\.md$
+^README_files$

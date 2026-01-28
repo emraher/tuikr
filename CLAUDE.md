@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-`tuikR` is an R package for accessing Turkish Statistical Institute (TUIK) data. It provides functions to:
+`tuikr` is an R package for accessing Turkish Statistical Institute (TUIK) data. It provides functions to:
 - Extract data file and database URLs from https://data.tuik.gov.tr/
 - Download geographic statistical data from https://cip.tuik.gov.tr/
 - Retrieve geographic map data at different NUTS levels (2, 3, 4) and settlement points (level 9)
@@ -68,7 +68,7 @@ pkgdown::build_site()
 ### Running R CMD check
 ```bash
 R CMD build .
-R CMD check tuikR_*.tar.gz
+R CMD check tuikr_*.tar.gz
 ```
 
 ### Testing
@@ -152,7 +152,7 @@ The package uses the **eerdown** theme (custom theme by package author):
 - Configuration in `_pkgdown.yml`
 - Functions organized into "Statistical Data Functions" and "Geographic Data Functions"
 - Automatic deployment via GitHub Actions to gh-pages branch
-- Website URL: https://eremrah.com/tuikR/
+- Website URL: https://eremrah.com/tuikr/
 
 ### Citation
 Standard citation metadata in `CITATION.cff` (CFF v1.2.0 format).

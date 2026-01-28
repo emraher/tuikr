@@ -15,10 +15,9 @@ RoxygenNote: 7.3.3
 Config/testthat/edition: 3
 Config/Needs/website: emraher/eerdown
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.1.0)
 Imports:
     rlang (>= 0.1.2),
-    magrittr,
     crayon,
     crul,
     dplyr,
@@ -27,18 +26,20 @@ Imports:
     rvest,
     stringr,
     tibble,
-    tidyselect,
     xml2,
     janitor,
     jsonlite,
     tidyr,
-    sf,
-    rjson
+    sf
 Suggests:
     testthat (>= 3.0.0),
     covr,
     knitr,
     rmarkdown,
     pkgdown,
-    V8
+    V8,
+    tidyverse,
+    readxl,
+    cartogram,
+    geogrid
 VignetteBuilder: knitr

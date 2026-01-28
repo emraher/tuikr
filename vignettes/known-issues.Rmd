@@ -17,20 +17,13 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-This vignette documents known issues, limitations, and workarounds when using `tuikr`. Understanding these challenges will help you work more effectively with TUIK data.
+Known issues and workarounds for `tuikr`.
 
 ## TUIK Website Structure Changes
 
 ### The Challenge
 
-`tuikr` relies on web scraping to extract data from TUIK's portals. When TUIK updates their website structure, scraping functions can break. This is an inherent limitation of any web scraping approach.
-
-**Symptoms:**
-- Functions that previously worked now return errors
-- Empty results where data should exist
-- Parsing errors or unexpected data structures
-
-**Example:**
+Web scraping breaks when TUIK updates website structure.
 ```{r website_change}
 # This may fail if TUIK has restructured their database pages
 databases <- statistical_databases("110")
@@ -39,42 +32,13 @@ databases <- statistical_databases("110")
 
 ### Workarounds
 
-1. **Check for package updates:**
-```{r check_update}
-# Check your current version
-packageVersion("tuikr")
-
-# Install the latest development version
-devtools::install_github("emraher/tuikr")
-```
-
-2. **Report the issue:**
-   - Visit [GitHub Issues](https://github.com/emraher/tuikr/issues)
-   - Provide details: which function, error message, date discovered
-   - Include `sessionInfo()` output
-
-3. **Use alternative data sources:**
-   - If statistical tables fail, try databases
-   - If the main portal fails, try geographic data functions (different API)
-
-### Prevention
-
-The geographic data functions (`geo_data()`, `geo_map()`) are more stable because they:
-- Use TUIK's JSON API instead of scraping HTML
-- Have fewer dependencies on page structure
-- Are less likely to break with website updates
+Check for updates, report issues on [GitHub](https://github.com/emraher/tuikr/issues), or use geographic functions (more stable JSON API).
 
 ## Messy Excel Files
 
 ### The Problem
 
-TUIK Excel files have inconsistent formatting that makes them challenging to parse programmatically. Common issues include:
-
-1. **Multiple header rows**
-2. **Mixed languages** (Turkish and English)
-3. **Source notes in data area**
-4. **Merged cells**
-5. **Footer rows with metadata**
+TUIK Excel files have inconsistent formatting: multiple headers, mixed languages, source notes in data area, merged cells.
 
 ### Example of a Messy File
 
@@ -104,64 +68,30 @@ print(raw_data)
 
 ### Cleaning Strategies
 
-#### 1. Skip Header Rows
-
 ```{r skip_rows}
 # Skip the first few rows
 clean_data <- read_xls("/tmp/data.xls", skip = 3)
 ```
 
-#### 2. Limit Row Count
-
 ```{r limit_rows}
-# Read only data rows, exclude footer
 clean_data <- read_xls("/tmp/data.xls", skip = 3, n_max = 10)
 ```
 
-#### 3. Remove NA Rows
-
 ```{r remove_na}
 library(tidyverse)
-
-clean_data <- read_xls("/tmp/data.xls", skip = 2) %>%
-  filter(!is.na(...1)) %>%          # Remove rows with NA in first column
-  filter(!str_detect(...1, "Kaynak|Source"))  # Remove source rows
+clean_data <- read_xls("/tmp/data.xls", skip = 2) |>
+  filter(!is.na(...1)) |>
+  filter(!str_detect(...1, "Kaynak|Source"))
 ```
-
-#### 4. Standardize Column Names
 
 ```{r clean_names}
 library(janitor)
-
-clean_data <- read_xls("/tmp/data.xls", skip = 3) %>%
-  clean_names() %>%                 # Convert to snake_case
-  rename(year = x1, total = x2)     # Rename specific columns
+clean_data <- read_xls("/tmp/data.xls", skip = 3) |>
+  clean_names() |>
+  rename(year = x1, total = x2)
 ```
 
-#### 5. Complete Cleaning Pipeline
-
-```{r complete_clean}
-clean_tuik_file <- function(filepath, skip_rows = 2, max_rows = NULL) {
-  data <- read_xls(filepath, skip = skip_rows, n_max = max_rows) %>%
-    janitor::clean_names() %>%
-    # Remove completely empty rows
-    filter(if_any(everything(), ~ !is.na(.))) %>%
-    # Remove footer rows (source notes)
-    filter(!str_detect(names(.)[1], "kaynak|source|bilgi|data are")) %>%
-    # Convert numeric columns stored as character
-    mutate(across(where(~ is.character(.) && all(str_detect(., "^\\d+$"), na.rm = TRUE)),
-                  as.numeric))
-
-  return(data)
-}
-
-# Use the function
-clean_data <- clean_tuik_file("/tmp/data.xls", skip_rows = 3)
-```
-
-### Manual Inspection First
-
-Before automating, always inspect files manually:
+Inspect files manually before automating:
 
 ```{r manual_inspect}
 # View the raw file
@@ -171,17 +101,15 @@ View(read_xls("/tmp/data.xls"))
 dim(read_xls("/tmp/data.xls"))
 
 # Inspect specific rows
-read_xls("/tmp/data.xls") %>% slice(1:5)
-read_xls("/tmp/data.xls") %>% slice((n()-5):n())
+read_xls("/tmp/data.xls") |> slice(1:5)
+read_xls("/tmp/data.xls") |> slice((n()-5):n())
 ```
 
 ## Network Dependencies
 
 ### Online-Only Functions
 
-All `tuikr` functions require internet connectivity:
-- `statistical_themes()`, `statistical_tables()`, `statistical_databases()`: Scrape TUIK web pages
-- `geo_data()`, `geo_map()`: Query TUIK's geographic API
+All functions require internet connectivity.
 
 ### Handling Connection Failures
 
@@ -209,27 +137,10 @@ if (is.null(themes)) {
 }
 ```
 
-### Testing Considerations
-
-The package uses `testthat::skip_on_cran()` and `skip_if_offline()` for tests that require network access:
-
-```{r test_skip}
-test_that("statistical_themes works", {
-  skip_on_cran()
-  skip_if_offline()
-
-  themes <- statistical_themes()
-  expect_s3_class(themes, "tbl_df")
-})
-```
-
-If you're developing or testing offline, many tests will be skipped.
 
 ## API Limitations
 
 ### Rate Limiting
-
-While not officially documented, TUIK's APIs may have rate limits. If making many requests:
 
 ```{r rate_limit}
 # Add delays between requests
@@ -265,14 +176,14 @@ geo_data(
 #> Error: This data is not available at this NUTS level (level = 4)!!!
 ```
 
-**Solution:** Always check `var_levels` before downloading:
+Check `var_levels` before downloading:
 
 ```{r check_levels}
 download_if_available <- function(var_no, level, ...) {
   vars <- geo_data()
-  available_levels <- vars %>%
-    filter(var_num == var_no) %>%
-    pull(var_levels) %>%
+  available_levels <- vars |>
+    filter(var_num == var_no) |>
+    pull(var_levels) |>
     pluck(1)
 
   if (level %in% available_levels) {
@@ -285,26 +196,16 @@ download_if_available <- function(var_no, level, ...) {
 }
 ```
 
-### Incomplete Metadata
-
-Some variables have Turkish-only names and no English translations. This is a limitation of TUIK's source data, not the package.
 
 ## Locale and Date Parsing
 
 ### Turkish Date Formats
 
-`statistical_tables()` parses dates in Turkish format, which requires proper locale settings:
-
 ```{r locale}
-# The function handles this internally
 statistical_tables("110")
-
-# Platform-specific locale detection:
-# - Windows: "Turkish_Turkey.utf8"
-# - Unix/macOS: "tr_TR"
 ```
 
-If you encounter date parsing errors, check your system locale:
+Check system locale if encountering date parsing errors:
 
 ```{r check_locale}
 Sys.getlocale("LC_TIME")
@@ -318,82 +219,32 @@ Sys.setlocale("LC_TIME", "Turkish_Turkey.utf8")
 
 ### Geographic Data Dates
 
-Geographic data dates are either:
-- **Annual**: `"2019"` (4 digits)
-- **Monthly**: `"201901"` (6 digits, YYYYMM)
-
-Parse accordingly:
-
 ```{r parse_dates}
-data <- geo_data(3, "SNM-GK160951-O33303", "medas", "yillik", 5) %>%
+# Annual: "2019" (4 digits), Monthly: "201901" (6 digits)
+data <- geo_data(3, "SNM-GK160951-O33303", "medas", "yillik", 5) |>
   mutate(
     year = as.integer(substr(date, 1, 4)),
-    month = if_else(
-      nchar(date) == 6,
-      as.integer(substr(date, 5, 6)),
-      NA_integer_
-    )
+    month = if_else(nchar(date) == 6, as.integer(substr(date, 5, 6)), NA_integer_)
   )
 ```
 
-## GitHub Issue #2: Connection Problems
+## GitHub Issue #2
 
-[Issue #2](https://github.com/emraher/tuikr/issues/2) on the GitHub repository tracks common connection-related problems. If you encounter:
-
-- Timeouts
-- SSL certificate errors
-- HTTP 403/404 errors
-- Proxy-related failures
-
-Check this issue for:
-- Known workarounds
-- Similar user reports
-- Maintainer responses
+[Issue #2](https://github.com/emraher/tuikr/issues/2) tracks connection problems (timeouts, SSL errors, proxy failures).
 
 ## V8 Dependency (Historical)
 
-### Background
-
-Earlier versions of `tuikr` used the V8 JavaScript engine to execute TUIK's JavaScript code for retrieving map data. This created installation challenges:
-
-- V8 requires system libraries (libv8-dev)
-- Installation fails on some systems
-- Not needed for most use cases
-
-### Current Status
-
-V8 is now in `Suggests`, not `Imports`. The package works without it:
+V8 is now optional (in `Suggests`). Not needed for current functionality:
 
 ```{r v8_optional}
-# This works without V8 installed
 geo_map(3)
 geo_data()
-
-# V8 is only needed if using legacy approaches (not recommended)
-```
-
-If you have old code that requires V8:
-
-```{r install_v8}
-# Install V8 (optional)
-install.packages("V8")
-
-# Or skip it - modern tuikr doesn't need it
 ```
 
 ## Character Encoding
 
-Turkish characters (ç, ğ, ı, ö, ş, ü) should display correctly if:
-
-1. Your R session uses UTF-8 encoding
-2. Your console/IDE supports UTF-8
-
-Check encoding:
-
 ```{r encoding}
 Sys.getlocale("LC_CTYPE")
-
-# If you see mojibake (garbled characters), try:
 Sys.setlocale("LC_CTYPE", "en_US.UTF-8")  # Unix/macOS
 Sys.setlocale("LC_CTYPE", "Turkish_Turkey.utf8")  # Windows
 ```
@@ -402,16 +253,7 @@ Sys.setlocale("LC_CTYPE", "Turkish_Turkey.utf8")  # Windows
 
 ### Large Downloads
 
-District-level (LAU-1) data has 973 administrative units. Downloads can be slow:
-
-```{r slow_download}
-# This may take 10-30 seconds
-district_data <- geo_data(4, "ADNKS-GK137473-O29001", "medas", "yillik", 5)
-```
-
-**Solutions:**
-- Filter data after downloading instead of making multiple requests
-- Cache results for reuse:
+Cache results for reuse:
 
 ```{r cache}
 cache_file <- "data/district_population.rds"
@@ -426,62 +268,18 @@ if (file.exists(cache_file)) {
 
 ### Map Files
 
-Map geometries are detailed and can be large in memory:
-
 ```{r map_size}
-# LAU-1 districts with detailed boundaries
 lau1 <- geo_map(4)
-object.size(lau1) %>% format(units = "MB")
-#> "15.2 Mb"
+object.size(lau1) |> format(units = "MB")
 
-# Simplify geometry for faster plotting
 library(sf)
 lau1_simple <- st_simplify(lau1, dTolerance = 0.01)
-object.size(lau1_simple) %>% format(units = "MB")
-#> "3.8 Mb"
+object.size(lau1_simple) |> format(units = "MB")
 ```
 
-## Reporting New Issues
+## Reporting Issues
 
-If you discover a new issue:
-
-1. **Check existing issues:** [github.com/emraher/tuikr/issues](https://github.com/emraher/tuikr/issues)
-
-2. **Provide details:**
-   - Function call that failed
-   - Complete error message
-   - Expected vs actual behavior
-   - `sessionInfo()` output
-
-3. **Create a minimal reproducible example:**
-```{r reprex, eval=FALSE}
-library(tuikr)
-
-# Minimal code that reproduces the problem
-result <- statistical_tables("110")
-
-# Include sessionInfo()
-sessionInfo()
-```
-
-4. **Be patient:** The package is maintained by volunteers
-
-## Staying Updated
-
-Subscribe to the GitHub repository to receive notifications:
-
-- New releases
-- Bug fixes
-- Breaking changes
-- Security updates
-
-```bash
-# Watch the repository on GitHub
-# Visit: https://github.com/emraher/tuikr
-# Click "Watch" → "All Activity"
-```
-
-Check the [NEWS.md](https://github.com/emraher/tuikr/blob/master/NEWS.md) file for version-specific changes.
+Report issues at [github.com/emraher/tuikr/issues](https://github.com/emraher/tuikr/issues) with function call, error message, and `sessionInfo()`.
 
 ## Summary
 
@@ -494,5 +292,3 @@ Check the [NEWS.md](https://github.com/emraher/tuikr/blob/master/NEWS.md) file f
 | Rate limiting | Low | Add delays between requests |
 | Turkish locales | Low | Set system locale |
 | V8 dependency | Low (historical) | Now optional, not needed |
-
-Despite these limitations, `tuikr` provides valuable access to TUIK data that would otherwise require extensive manual work. Understanding these challenges helps you build robust data pipelines.
