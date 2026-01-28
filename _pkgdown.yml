@@ -4,20 +4,71 @@ template:
 
 url: https://eremrah.com/tuikR
 
+development:
+  mode: auto
+
+home:
+  title: tuikR - Access Turkish Statistical Institute Data
+  description: >
+    R package for downloading statistical tables, databases, and geographic data
+    from the Turkish Statistical Institute (TUIK/TÜİK).
+  links:
+  - text: TUIK Data Portal
+    href: https://data.tuik.gov.tr/
+  - text: TUIK Geographic Portal
+    href: https://cip.tuik.gov.tr/
+  - text: Report an Issue
+    href: https://github.com/emraher/tuikR/issues
+
 authors:
   Emrah Er:
     href: https://eremrah.com
 
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    home: ~
+    articles:
+      text: Articles
+      menu:
+      - text: Getting Started
+        href: articles/getting-started.html
+      - text: Geographic Mapping
+        href: articles/geographic-mapping.html
+      - text: Known Issues & Limitations
+        href: articles/known-issues.html
+    news:
+      text: News
+      href: news/index.html
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with
+  components:
+    built_with: "Built with ❤️ and [pkgdown](https://pkgdown.r-lib.org/)"
+
 reference:
 - title: Statistical Data Functions
-  desc: Functions for accessing TUIK statistical data portal
+  desc: >
+    Functions for accessing TUIK's main data portal (data.tuik.gov.tr).
+    These functions scrape statistical themes, tables, and database URLs.
   contents:
   - statistical_themes
   - statistical_tables
   - statistical_databases
 
 - title: Geographic Data Functions
-  desc: Functions for accessing TUIK geographic statistics portal
+  desc: >
+    Functions for accessing TUIK's geographic statistics portal (cip.tuik.gov.tr).
+    Download spatial data and map boundaries at different NUTS levels.
   contents:
   - geo_data
   - geo_map
+
+- title: Internal and Re-exported Functions
+  desc: Helper functions and re-exported utilities (not typically needed by end users)
+  contents:
+  - has_keyword("internal")
