@@ -1,6 +1,6 @@
 Package: tuikR
 Title: Download Data File And Database Urls from TUIK
-Version: 0.0.2
+Version: 0.1.0
 Authors@R:
     person("Emrah", "Er", email = "eer@eremrah.com", role = c("aut", "cre"))
 Description: Download Data File And Database Urls from TUIK (Turkish Statistical Institute).

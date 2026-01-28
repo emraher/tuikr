@@ -5,7 +5,7 @@ authors:
     given-names: "Emrah"
     email: "eer@eremrah.com"
 title: "tuikR: Download Data File And Database Urls from TUIK"
-version: 0.0.2
+version: 0.1.0
 date-released: 2026-01-28
 url: "https://github.com/emraher/tuikR"
 repository-code: "https://github.com/emraher/tuikR"
