@@ -1,6 +1,10 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.2.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2024-02-21T07:21Z
-
+articles:
+  geographic-mapping: geographic-mapping.html
+  getting-started: getting-started.html
+last_built: 2026-03-31T06:06Z
+urls:
+  reference: https://eremrah.com/tuikr/reference
+  article: https://eremrah.com/tuikr/articles
